@@ -1,10 +1,10 @@
 import React from 'react'
-import slideData from '../assets/data/Carousel.js';
+import { slideData } from '../assets/data/Carousel'
 
 const Carousel = () => {
 
     const carouselSlide = slideData.map(image => (
-        <div key={image.key}>
+        <div>
             <img src={image.image}/> 
         </div>
     ))
