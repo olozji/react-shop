@@ -23,9 +23,11 @@ const [theme, setTheme] = useState<string>('light');
 
   return (
     <themeContext.Provider value={{ theme, setTheme }}>
+      <div data-theme={theme}>
         <NavBar/>
         <Page/>
         <Footer/>
+        </div>
         </themeContext.Provider>
   )
 }
