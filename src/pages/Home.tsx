@@ -1,11 +1,11 @@
 import React from 'react'
-import Carousel from '../componenets/Carousel'
+import RenderCarousel from '../componenets/RenderCarousel'
 import ItemList from '../componenets/ItemList'
 
 const Home = () => {
   return (
     <>
-    <Carousel/>
+    <RenderCarousel/>
     <ItemList page="home" category="fashion"/>
     <ItemList page="home" category="accessory"/>
     <ItemList page="home" category="digital"/>

@@ -9,8 +9,8 @@ const Page = () => {
       <Routes>
         <Route path='/' element={<Home/>}></Route>
         <Route path='/fashion' element={<Products category="fashion"/>}></Route>
-        <Route path='/accessory' element={<Home/>}></Route>
-        <Route path='/digital' element={<Home/>}></Route>
+        <Route path='/accessory' element={<Products category="accessory"/>}></Route>
+        <Route path='/digital' element={<Products category='digital'/>}></Route>
       </Routes>
     </div>
   )
