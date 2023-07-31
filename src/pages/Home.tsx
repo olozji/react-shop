@@ -6,9 +6,9 @@ const Home = () => {
   return (
     <>
     <RenderCarousel/>
-    <ItemList page="home" category="fashion"/>
-    <ItemList page="home" category="accessory"/>
-    <ItemList page="home" category="digital"/>
+    <ItemList page="home" category={"men's clothing" || "women's clothing"}/>
+    <ItemList page="home" category={"jewelery"}/>
+    <ItemList page="home" category={"electronics"}/>
     </>
   )
 }
