@@ -15,6 +15,29 @@ export interface ProductData {
       };
 }
 
+
+export const productsState = atom<ProductData[]>({
+    key:'productsState',
+    default:[],
+})
+
+export const selectedProductState = atom<number | null>({
+    key: 'selectedProductState',
+    default: null, // 기본값은 null
+  });
+
+  export const getSelectedProduct = selector<ProductData | null>({
+    key: 'getSelectedProduct',
+    get: ({ get }) => {
+      const selectedProductId = get(selectedProductState);
+      const products = get(productsState);
+      return products.find((product) => product.id === selectedProductId) || null;
+    },
+  });
+
+
+
+
 interface PostState {
     loading:boolean;
     data:ProductData[] | null;
@@ -34,35 +57,33 @@ export const productListState = atom<PostState>({
 export const getPost = selector({
     key:'getPost',
     get: async () => {
-        // const res = await fetch('https://fakestoreapi.com/products');
-        //  const products : ProductData[] = await res.json();
-
-        //  let fashion: ProductData[] = [];
-        //  let accessory: ProductData[] = [];
-        //  let digital : ProductData[] = [];
-        //  let all : ProductData[] = [];
-        
-        // products.forEach((product) => {
-        //     switch (product.category) {
-        //         case "men's clothing" :
-        //             fashion.push(product)
-        //         case "womens's clothing" :
-        //             fashion.push(product);
-        //         case 'jewelery':
-        //             accessory.push(product);
-        //         case "electronics" :
-        //             digital.push(product);
-        //         default:
-        //             break;
-        //     }
-        //     all.push(product);
-        // });
-        // return { fashion, accessory, digital, all}
-        const res = await fetch('https://fakestoreapi.com/products');
+        const res = await fetch('https://fakestoreapi.com/products/');
         const data = await res.json();
         return data;
     }
 }) ;
 
+export const categoryState = atom({
+    key:'categoryName',
+    default:''
+})
+
+export const categoryNameSelector = selector({
+    key:'categoryNameSelector',
+    get: ({get}) => {
+        const category = get(categoryState);
+
+        switch(category) {
+            case "men's clothing" && "women's clothing":
+                return '패션';
+            case 'electronics':
+                return '디지털';
+            case 'jewelery':
+                return '액세서리';
+            default:
+                return '';
+        }
+    }
+})
 
 

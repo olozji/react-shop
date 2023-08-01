@@ -17,7 +17,7 @@ export interface ProductData {
     };
 }
 
-const ItemList = ({page, category}: {page:string; category:string}) => {
+const ItemList = ({page, category=''}: {page:string; category:string}) => {
   
   const allProducts = useRecoilValue(getPost);
   const allProductsSlice = allProducts.filter((product:ProductData) => product.category === category);
@@ -25,21 +25,22 @@ const ItemList = ({page, category}: {page:string; category:string}) => {
   const [categoryName, setCategoryName] = useState('');
 
   useEffect(() => {
-    if (category === 'fashion') {
+    if (category === "men's clothing" && "women's clothing") {
       setCategoryName('패션');
-    } else if (category === 'digital') {
+    } else if (category === 'electronics') {
       setCategoryName('디지털');
-    } else if (category === 'accessory') {
+    } else if (category === 'jewelery') {
       setCategoryName('액세서리');
-    } else {
-    
-    }
-  });
+    } 
+  },[categoryName]);
   
   return (
    
     <section className='pt-20'>
-      <h2>{categoryName}</h2>
+    <h2 className='m-2 lg:mb-8 text-3xl lg:text-4xl text-center font-bold'>
+      {categoryName}
+      </h2>
+
     <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-4 item_list'>
     {allProductsSlice.map((product:ProductData) => (
     <div className="card shadow-xl m-2" key={product.id}>

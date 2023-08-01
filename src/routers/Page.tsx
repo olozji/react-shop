@@ -11,10 +11,10 @@ const Page = () => {
     <div>
       <Routes>
         <Route path='/' element={<Home/>}></Route>
-        <Route path='/fashion' element={<FashionPage/>}></Route>
-        <Route path='/accessory' element={<AccessoryPage/>}></Route>
-        <Route path='/digital' element={<DigitalPage/>}></Route>
-        {/* <Route path="/product/:pid" element={<Products />}></Route>       */}
+        <Route path='/fashion' element={<FashionPage category={"men's clothing" || "women's clothing"}/>}></Route>
+        <Route path='/accessory' element={<AccessoryPage category='jewelery'/>}></Route>
+        <Route path='/digital' element={<DigitalPage category='electronics' />}></Route>
+        <Route path="/products/:id" element={<Products />}></Route>      
       </Routes>
     </div>
   )

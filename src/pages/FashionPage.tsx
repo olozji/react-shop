@@ -1,7 +1,8 @@
-import React from 'react'
-import { useRecoilValue } from 'recoil'
-import { getPost } from '../store/ProductsAtoms'
+import React, {useEffect, useState} from 'react'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { getPost, productsState, selectedProductState } from '../store/ProductsAtoms'
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 
 export interface ProductData {
@@ -17,27 +18,47 @@ export interface ProductData {
       };
 }
 
-const FashionPage = () => {
+const FashionPage = ({category=''}: {category:string}) => {
 
     const allProducts = useRecoilValue(getPost);
     const fashionProducts = allProducts.filter((product:ProductData) => product.category === "men's clothing" || product.category === "women's clothing");
 
+    const products = useRecoilValue(productsState);
+    const [selectedProduct, setSelectedProduct] = useRecoilState(selectedProductState);
+
+
+    const [categoryName, setCategoryName] = useState('');
+
+    useEffect(() => {
+      if (category === "men's clothing" && "women's clothing") {
+        setCategoryName('패션');
+      } else if (category === 'electronics') {
+        setCategoryName('디지털');
+      } else if (category === 'jewelery') {
+        setCategoryName('액세서리');
+      } 
+    },[categoryName])
+
+
   return (
     <section className='pt-20'>
+     <h2>홈 &lt; {categoryName}</h2>
     <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-4 item_list'>
     {fashionProducts.map((product:ProductData) => (
-    <div className="card shadow-xl m-2" key={product.id}>
+    <Link to={`/products/${product.id}`} key={product.id} onClick={() => setSelectedProduct(product.id)}>
+    <div className="card shadow-xl m-2" >
         <figure className='w-30 h-72 bg-white'>
-        <img className='w-60 max-h-[100%] hover:scale-110 ease-linear duration-200"' src={product.image}/>
+        <img className='w-60 max-h-[100%] hover:scale-110 ease-linear duration-200"'
+         src={product.image}/>
         </figure>
          <div className="card-body h-52">
          <h2>{product.title}</h2>
         <h2 className='card-title'>${product.price}</h2> 
       </div>
     </div>
+    </Link>
      ))}
     </div>
-     
     </section>
   )
 }
