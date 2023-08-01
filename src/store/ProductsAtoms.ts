@@ -3,15 +3,15 @@ import { atom, selector } from "recoil"
 
 
 export interface ProductData {
-    id:number;
-    title:string;
-    price:string;
-    category:string;
-    description:string;
-    image:string;
-    rating: {
-        rate: number;
-        count: number;
+    id?:number;
+    title?:string;
+    price?:string;
+    category?:string;
+    description?:string;
+    image?:string;
+    rating?: {
+        rate?: number;
+        count?: number;
       };
 }
 
@@ -21,7 +21,7 @@ export const productsState = atom<ProductData[]>({
     default:[],
 })
 
-export const selectedProductState = atom<number | null>({
+export const selectedProductState = atom<ProductData | null>({
     key: 'selectedProductState',
     default: null, // 기본값은 null
   });
@@ -32,6 +32,8 @@ export const selectedProductState = atom<number | null>({
       const selectedProductId = get(selectedProductState);
       const products = get(productsState);
       return products.find((product) => product.id === selectedProductId) || null;
+
+      
     },
   });
 

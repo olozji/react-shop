@@ -1,6 +1,7 @@
 import React ,{useEffect , useState}from 'react'
-import { useRecoilValue } from 'recoil';
-import {categoryNameSelector, categoryState, getPost } from '../store/ProductsAtoms'
+import { useRecoilValue, useRecoilState } from 'recoil';
+import {categoryNameSelector, categoryState, getPost ,selectedProductState} from '../store/ProductsAtoms'
+import { Link } from 'react-router-dom';
 
 export interface ProductData {
     id:number;
@@ -21,6 +22,8 @@ const DigitalPage = ({category=''}:{category:string}) => {
 
     const allProducts = useRecoilValue(getPost);
     const digitalProducts = allProducts.filter((product:ProductData) => product.category === "electronics");
+
+    const [selectedProduct, setSelectedProduct] = useRecoilState(selectedProductState)
 
     const [categoryName, setCategoryName] = useState('');
 
@@ -44,6 +47,7 @@ const DigitalPage = ({category=''}:{category:string}) => {
      <h2>홈 &lt; {categoryName}</h2>
     <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-4 item_list'>
     {digitalProducts.map((product:ProductData) => (
+    <Link to={`/products/${product.id}`} key={product.id} onClick={() => setSelectedProduct(product)}>
     <div className="card shadow-xl m-2" key={product.id}>
         <figure className='w-30 h-72 bg-white'>
         <img className='w-60 max-h-[100%] hover:scale-110 ease-linear duration-200"' src={product.image}/>
@@ -53,7 +57,9 @@ const DigitalPage = ({category=''}:{category:string}) => {
         <h2 className='card-title'>${product.price}</h2> 
       </div>
     </div>
+    </Link>
      ))}
+     
     </div>
      
     </section>

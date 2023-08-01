@@ -45,7 +45,7 @@ const FashionPage = ({category=''}: {category:string}) => {
      <h2>홈 &lt; {categoryName}</h2>
     <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-4 item_list'>
     {fashionProducts.map((product:ProductData) => (
-    <Link to={`/products/${product.id}`} key={product.id} onClick={() => setSelectedProduct(product.id)}>
+    <Link to={`/products/${product.id}`} key={product.id} onClick={() => setSelectedProduct(product)}>
     <div className="card shadow-xl m-2" >
         <figure className='w-30 h-72 bg-white'>
         <img className='w-60 max-h-[100%] hover:scale-110 ease-linear duration-200"'

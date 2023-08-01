@@ -60,7 +60,7 @@ const Products = () => {
       <div className="flex items-center mt-3">
         <div className="rating rating-half"></div>
         <div className="ml-2">
-          {selectedProduct.rate} / {selectedProduct.count} 참여
+          {selectedProduct.rating?.rate} / {selectedProduct.rating?.count} 참여
         </div>
       </div>
       <p className="mt-2 mb-4 text-3xl">${selectedProduct.price}</p>
