@@ -26,16 +26,16 @@ export const selectedProductState = atom<ProductData | null>({
     default: null, // 기본값은 null
   });
 
-//   export const getSelectedProduct = selector<ProductData | null>({
-//     key: 'getSelectedProduct',
-//     get: ({ get }) => {
-//       const selectedProductId = get(selectedProductState);
-//       const products = get(productsState);
-//       return products.find((product) => product.id === selectedProductId) || null;
+  export const getSelectedProduct = selector<ProductData | null>({
+    key: 'getSelectedProduct',
+    get: ({ get }) => {
+      const selectedProductId = get(selectedProductState);
+      const products = get(productsState);
+      return products.find((product) => product.id === selectedProductId) || null;
 
       
-//     },
-//   });
+    },
+  });
 
 
 

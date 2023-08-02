@@ -8,13 +8,15 @@ import { ProductData } from './ItemList';
 const CartList = () => {
 
   const product = useRecoilValue(productsState);
-  const cartItems = useRecoilValue(cartState) || [];
+  const cartItems = useRecoilValue(cartState);
+  console.log(cartItems);
+  
 
   return (
     <>
     <div className="lg:flex justify-between mb-20">
     <div>
-      {cartItems.map((item: ProductData) => (
+      {cartItems.map((item: any) => (
         <CartItem
           image={item.image}
           id={item.id}
