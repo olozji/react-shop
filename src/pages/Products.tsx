@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react'
-import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from 'recoil';
-import { getPost, getSelectedProduct, selectedProductState } from '../store/ProductsAtoms';
+import { useRecoilState, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from 'recoil';
+import { getPost, productListState, productsState, selectedProductState } from '../store/ProductsAtoms';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { addToCart, cartState, cartItemCountState } from '../store/CartAtoms';
 
 interface ProductData {
   id: number;
@@ -30,6 +32,35 @@ const Products = () => {
   const selectedProduct = useRecoilValue(selectedProductState);
 
   console.log(selectedProduct);
+
+  const product = useRecoilValue(productsState);
+  const setCart = useSetRecoilState(cartState);
+
+  const setCartItemCount = useRecoilValue(cartItemCountState);
+
+  const addToCart = (productToAdd : ProductData) => {
+    setCart((prevCart) => [...prevCart, productToAdd]);
+  }
+
+  
+
+  const handleAddToCart = () => {
+    const productToAdd : ProductData = {
+      id: 1,
+      title: '',
+      price: 0,
+      category: '',
+      description: '',
+      image: '',
+      rating: {
+        rate: 0,
+        count: 0,
+      },
+    }
+    addToCart(productToAdd);
+  };
+  
+
   
   if(!selectedProduct){
     return <div>상품이 존재하지 않습니다.</div>
@@ -65,9 +96,10 @@ const Products = () => {
       </div>
       <p className="mt-2 mb-4 text-3xl">${selectedProduct.price}</p>
       <div className="card-actions">
-        <button className="btn btn-primary">
+        <button className="btn btn-primary" onClick={() =>addToCart(product)}>
           장바구니에 담기
         </button>
+        <Link to ='/cart'>장바구니로 이동</Link>
       </div>
     </div>
   </div>
