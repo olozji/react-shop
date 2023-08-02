@@ -92,7 +92,7 @@ const Products = () => {
       </div>
       <p className="mt-2 mb-4 text-3xl">${selectedProduct?.price}</p>
       <div className="card-actions">
-        <button className="btn btn-primary" onClick={() =>handleAddToCart(product)}>
+        <button className="btn btn-primary" onClick={() =>handleAddToCart()}>
           장바구니에 담기
         </button>
         <Link to ='/cart'>장바구니로 이동</Link>
