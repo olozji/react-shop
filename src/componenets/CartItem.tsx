@@ -1,12 +1,41 @@
 import React from 'react'
-import { useRecoilValue } from 'recoil';
-import { cartItemCountState } from '../store/CartAtoms';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { cartItemCountState, addToCart, removeFromCart } from '../store/CartAtoms';
 import {Link} from 'react-router-dom';
+
+
+export interface ProductData {
+  id:number;
+  title:string;
+  price:string;
+  category:string;
+  description:string;
+  image:string;
+  rating: {
+      rate: number;
+      count: number;
+    };
+}
+
 
 const CartItem = (props: any) => {
 
 
-  const cartItemCount = useRecoilValue(cartItemCountState);
+  //const cartItemCount = useRecoilValue(cartItemCountState);
+
+  const [cartItemCount, setCartItemCount] = useRecoilState(cartItemCountState);
+
+  const handleAddToCart = () => {
+    setCartItemCount((prevCount) => prevCount + 1);
+    addToCart(props);
+  };
+
+  const handleRemoveFromCart = () => {
+    if (cartItemCount > 0) {
+      setCartItemCount((prevCount) => prevCount - 1);
+      removeFromCart(props.id);
+    }
+  };
 
   return (
     <div className="lg:flex lg:items-center mt-4 px-2 lg:px-0">
@@ -26,13 +55,13 @@ const CartItem = (props: any) => {
       </p>
       <div className="card-actions">
         <div className="btn-group">
-          <button className="btn btn-primary">
+          <button className="btn btn-primary" onClick={handleRemoveFromCart}>
             -
           </button>
           <button className="btn btn-ghost no-animation">
             {cartItemCount}
           </button>
-          <button className="btn btn-primary">
+          <button className="btn btn-primary" onClick={handleAddToCart}>
             +
           </button>
         </div>

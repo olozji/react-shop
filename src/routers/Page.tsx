@@ -5,7 +5,7 @@ import Products from '../pages/Products'
 import FashionPage from '../pages/FashionPage'
 import AccessoryPage from '../pages/AccessoryPage'
 import DigitalPage from '../pages/DigitalPage'
-import Cart from '../componenets/CartEmpty'
+import Cart from '../pages/Cart';
 
 const Page = () => {
   return (

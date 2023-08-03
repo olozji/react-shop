@@ -9,7 +9,7 @@ import { cartItemCountState } from '../store/CartAtoms';
 const Cart = () => {
 
   const cartItemCount = useRecoilValue(cartItemCountState);
-  console.log('cartItemCount:' , cartItemCount);
+  console.log('cartItemCount:' , cartItemCountState);
 
   return (
     <section className='pt-16'>
