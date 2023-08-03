@@ -1,10 +1,10 @@
-import { atom,selector,useRecoilState } from "recoil";
+import { SetterOrUpdater, atom,selector,useRecoilState,useSetRecoilState } from "recoil";
 
 
 export interface ProductData {
     id?:number;
     title?:string;
-    price?:string;
+    price?:string | number;
     category?:string;
     description?:string;
     image?:string;
@@ -18,6 +18,8 @@ export interface ProductData {
 export const cartState = atom<ProductData[]>({
     key:'cartState',
     default:[],
+    
+    
 })
 
 // 장바구니에 상품을 카운트
@@ -26,17 +28,25 @@ export const cartItemCountState = selector<number>({
     get:({get}) => {
         const cart = get(cartState);
         return cart.length;
+       
     }
 })
 
 // 장바구니에 상품을 추가, 삭제
-export function addToCart(product: ProductData) {
-    return ({ set }: { set: (newCart: ProductData[] | ((prevCart: ProductData[]) => ProductData[])) => void }) => {
-      set((prevCart) => [...prevCart, product]);
-    };
-  }
+// export const addToCart = (product: ProductData)  => {
+//     return ({ set }: { set: (newCart: ProductData[] | ((prevCart: ProductData[]) => ProductData[])) => void }) => {
+//       set((prevCart) => [...prevCart, product]);
+//     };
+//   }
+export const addToCart = (product: ProductData) => {
+  return (set: SetterOrUpdater<ProductData[]>) => {
+    set((prevCart) => [...prevCart, product]);
+    console.log(product);
+  };
+};
 
-  export function removeFromCart(productId: number) {
+
+  export const removeFromCart = (productId: number)  => {
     return ({ set }: { set: (newCart: ProductData[] | ((prevCart: ProductData[]) => ProductData[])) => void }) => {
       set((prevCart) => prevCart.filter((product) => product.id !== productId));
     };

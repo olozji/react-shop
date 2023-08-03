@@ -8,7 +8,7 @@ import { addToCart, cartState, cartItemCountState } from '../store/CartAtoms';
 interface ProductData {
   id?: number;
   title?: string;
-  price?: number;
+  price?: number | string;
   description?: string;
   category?: string;
   image?: string;
@@ -22,46 +22,38 @@ interface ProductData {
 const Products = () => {
 
 
-  const selectedProduct = useRecoilValue(selectedProductState) as ProductData | null;
-
-  console.log(selectedProduct);
-
-  const product = useRecoilValue(productsState);
+  const selectedProduct = useRecoilValue(selectedProductState) as ProductData;
+  const cartItemCount = useRecoilValue(cartItemCountState); 
   const setCart = useSetRecoilState(cartState);
-  const selectCount = useRecoilValue(selectedProductState);
-
-  const setCartItemCount = useRecoilValue(cartItemCountState);
-
-  const addToCart = (productToAdd : ProductData) => {
-    setCart((prevCart: any) => [...prevCart, productToAdd]);
-    console.log('selectProduct 확인',productToAdd);
+  const addToCartHandler = addToCart(selectedProduct);
+  console.log(selectedProduct);
+  console.log('cartItemCount:', cartItemCount);
+  // const addToCart = (productToAdd : ProductData) => {
+  //   setCart((prevCart: any) => [...prevCart, productToAdd]);
+  //   console.log('selectProduct 확인',productToAdd);
     
-  }
+  // }
 
   
+    //  const productToAdd : ProductData = {
+    //    id: selectedProduct?.id!,
+    //    title: selectedProduct?.title!,
+    //    price: selectedProduct?.price!,
+    //    category: selectedProduct?.category!,
+    //    description: selectedProduct?.description!,
+    //    image:selectedProduct?.image!,
+    //    rating: {
+    //      rate: selectedProduct?.rating?.rate!,
+    //      count:selectedProduct?.rating?.count!,
+    //    },
+    //  }
 
-  const handleAddToCart = () => {
-    const productToAdd : ProductData = {
-      id: selectedProduct?.id!,
-      title: selectedProduct?.title!,
-      price: selectedProduct?.price!,
-      category: selectedProduct?.category!,
-      description: selectedProduct?.description!,
-      image:selectedProduct?.image!,
-      rating: {
-        rate: selectedProduct?.rating?.rate!,
-        count:selectedProduct?.rating?.count!,
-      },
-    }
-    addToCart(productToAdd);
-  };
-  
+  //  const addToCartHandler = addToCart(productToAdd);
+  //  const setCart = useSetRecoilState(cartState);
 
-  
-  if(!selectedProduct === null){
-    return <div>상품이 존재하지 않습니다.</div>
-  }
-
+   const handleAddToCart = () => {
+    addToCartHandler(setCart);
+   }
 
   return (
     <section>
@@ -92,10 +84,10 @@ const Products = () => {
       </div>
       <p className="mt-2 mb-4 text-3xl">${selectedProduct?.price}</p>
       <div className="card-actions">
-        <button className="btn btn-primary" onClick={() =>handleAddToCart()}>
+        <button className="btn btn-primary" onClick={handleAddToCart}>
           장바구니에 담기
         </button>
-        <Link to ='/cart'>장바구니로 이동</Link>
+        <Link to ={'/cart'}>장바구니로 이동</Link>
       </div>
     </div>
   </div>

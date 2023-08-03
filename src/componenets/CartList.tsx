@@ -2,7 +2,7 @@ import React from 'react'
 import CartItem from './CartItem'
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { productsState } from '../store/ProductsAtoms';
-import { cartState } from '../store/CartAtoms';
+import { cartItemCountState, cartState } from '../store/CartAtoms';
 import { ProductData } from './ItemList';
 
 const CartList = () => {

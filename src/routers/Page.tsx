@@ -16,7 +16,7 @@ const Page = () => {
         <Route path='/accessory' element={<AccessoryPage category='jewelery'/>}></Route>
         <Route path='/digital' element={<DigitalPage category='electronics' />}></Route>
         <Route path="/products/:id" element={<Products />}></Route> 
-        <Route path='/cart' element={<Cart/>}></Route>     
+        <Route path='/cart' element={<Cart />}></Route>     
       </Routes>
     </div>
   )
