@@ -18,24 +18,34 @@ export interface ProductData {
 }
 
 
-const CartItem = (props: any) => {
+const CartItem = (props: ProductData) => {
 
 
-  //const cartItemCount = useRecoilValue(cartItemCountState);
-
-  const [cartItemCount, setCartItemCount] = useRecoilState(cartItemCountState);
+  const cartItemCount = useRecoilValue(cartItemCountState);
 
   const handleAddToCart = () => {
-    setCartItemCount((prevCount) => prevCount + 1);
     addToCart(props);
   };
 
   const handleRemoveFromCart = () => {
     if (cartItemCount > 0) {
-      setCartItemCount((prevCount) => prevCount - 1);
       removeFromCart(props.id);
     }
   };
+
+  //const [cartItemCount, setCartItemCount] = useRecoilState(cartItemCountState);
+
+  // const handleAddToCart = () => {
+  //   setCartItemCount((prevCount) => prevCount + 1);
+  //   addToCart(props);
+  // };
+
+  // const handleRemoveFromCart = () => {
+  //   if (cartItemCount > 0) {
+  //     setCartItemCount((prevCount) => prevCount - 1);
+  //     removeFromCart(props.id);
+  //   }
+  // };
 
   return (
     <div className="lg:flex lg:items-center mt-4 px-2 lg:px-0">
@@ -51,7 +61,7 @@ const CartItem = (props: any) => {
     <div className="card-body px-1 lg:px-12">
       <h2 className="card-title">{props.title}</h2>
       <p className="mt-2 mb-4 text-3xl">
-        ${(props.price * cartItemCount).toFixed(2)}
+        ${(parseFloat(props.price) * cartItemCount).toFixed(2)}
       </p>
       <div className="card-actions">
         <div className="btn-group">

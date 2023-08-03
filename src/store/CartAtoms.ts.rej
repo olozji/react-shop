@@ -1,0 +1,20 @@
+diff a/src/store/CartAtoms.ts b/src/store/CartAtoms.ts	(rejected hunks)
+@@ -40,8 +40,16 @@
+ //   }
+ export const addToCart = (product: ProductData) => {
+   return (set: SetterOrUpdater<ProductData[]>) => {
+-    set((prevCart) => [...prevCart, product]);
+-    console.log(product);
++    set((prevCart) => {
++      const existingProduct = prevCart.find((item) => item.id === product.id);
++      if (existingProduct) {
++        return prevCart.map((item) =>
++          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
++        );
++      } else {
++        return [...prevCart, { ...product, quantity: 1 }];
++      }
++    });
+   };
+ };
+ 
