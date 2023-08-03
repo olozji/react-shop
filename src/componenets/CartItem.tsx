@@ -18,7 +18,7 @@ export interface ProductData {
 }
 
 
-const CartItem = (props: ProductData) => {
+const CartItem = (props: any) => {
 
 
   const cartItemCount = useRecoilValue(cartItemCountState);
