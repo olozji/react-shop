@@ -16,6 +16,7 @@ interface ProductData {
     rate?: number;
     count?: number;
   };
+  quantity:number;
 }
 
 
