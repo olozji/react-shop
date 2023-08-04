@@ -28,31 +28,10 @@ const Products = () => {
   const addToCartHandler = addToCart(selectedProduct);
   console.log(selectedProduct);
   console.log('cartItemCount:', cartItemCount);
-  // const addToCart = (productToAdd : ProductData) => {
-  //   setCart((prevCart: any) => [...prevCart, productToAdd]);
-  //   console.log('selectProduct 확인',productToAdd);
-    
-  // }
 
-  
-    //  const productToAdd : ProductData = {
-    //    id: selectedProduct?.id!,
-    //    title: selectedProduct?.title!,
-    //    price: selectedProduct?.price!,
-    //    category: selectedProduct?.category!,
-    //    description: selectedProduct?.description!,
-    //    image:selectedProduct?.image!,
-    //    rating: {
-    //      rate: selectedProduct?.rating?.rate!,
-    //      count:selectedProduct?.rating?.count!,
-    //    },
-    //  }
-
-  //  const addToCartHandler = addToCart(productToAdd);
-  //  const setCart = useSetRecoilState(cartState);
 
    const handleAddToCart = () => {
-    addToCartHandler(setCart);
+      addToCartHandler(setCart);
    }
 
   return (

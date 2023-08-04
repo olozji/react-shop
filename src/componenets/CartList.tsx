@@ -5,12 +5,22 @@ import { productsState } from '../store/ProductsAtoms';
 import { cartItemCountState, cartState } from '../store/CartAtoms';
 import { ProductData } from './ItemList';
 
-const CartList = () => {
+const CartList = (props:any & ProductData) => {
 
   const product = useRecoilValue(productsState);
   const cartItems = useRecoilValue(cartState);
+  const cartItemCount = useRecoilValue(cartItemCountState);
   console.log(cartItems);
-  
+ 
+
+  const getTotalPrice = () => {
+    let total = 0;
+    cartItems.forEach((item) => {
+      const price = parseFloat(item.price);
+      total += price;
+    });
+    return total;
+  }
 
   return (
     <>
@@ -23,11 +33,13 @@ const CartList = () => {
           key={item.id}
           price={item.price}
           title={item.title}
+          quantity={props}
         />
       ))}
     </div>
     <div className="self-start shrink-0 flex items-center mt-10 mb-20">
       <span className="text-xl md:text-2xl">
+      총 : ${getTotalPrice().toFixed(2)}
       </span>
       <label
         htmlFor="confirm-modal"

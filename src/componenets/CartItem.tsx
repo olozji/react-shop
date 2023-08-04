@@ -1,6 +1,6 @@
-import React from 'react'
-import { useRecoilValue, useRecoilState } from 'recoil';
-import { cartItemCountState, addToCart, removeFromCart } from '../store/CartAtoms';
+import React, {useState, useEffect} from 'react'
+import { useRecoilValue, useRecoilState,useSetRecoilState } from 'recoil';
+import { cartItemCountState, addToCart, removeFromCart, cartState, cartItemCountDefaultState } from '../store/CartAtoms';
 import {Link} from 'react-router-dom';
 
 
@@ -18,34 +18,55 @@ export interface ProductData {
 }
 
 
-const CartItem = (props: any) => {
 
 
-  const cartItemCount = useRecoilValue(cartItemCountState);
+const CartItem = (props:  ProductData) => {
 
+
+  //const cartItemCount = useRecoilValue(cartItemCountState);
+  //const setCartItemCount = useSetRecoilState(cartState);
+
+  const cartItems = useRecoilValue(cartState);
+  const setCartItems = useSetRecoilState(cartState);
+
+  const [quantity, setQuantity] = useState(1);
+
+   // 장바구니에 해당 상품이 이미 담겨있는지 확인하는 함수
+   const isProductInCart = (productId: number) => {
+    return cartItems.some((item) => item.id === productId);
+  };
+
+  // 장바구니에 해당 상품의 수량을 가져오는 함수
+  const getProductQuantityInCart = (productId: number) => {
+    const item = cartItems.find((item) => item.id === productId);
+    return item ? item.quantity : 0;
+  };
+
+   // 상품 수량이 변경될 때마다 quantity 값을 업데이트
+   useEffect(() => {
+    setQuantity(getProductQuantityInCart(props.id));
+  }, [cartItems, props.id]);
+ 
   const handleAddToCart = () => {
-    addToCart(props);
+    addToCart({...props, quantity});
+    setQuantity((prevQuantity) => prevQuantity + 1);
   };
-
-  const handleRemoveFromCart = () => {
-    if (cartItemCount > 0) {
-      removeFromCart(props.id);
-    }
-  };
-
-  //const [cartItemCount, setCartItemCount] = useRecoilState(cartItemCountState);
-
-  // const handleAddToCart = () => {
-  //   setCartItemCount((prevCount) => prevCount + 1);
-  //   addToCart(props);
-  // };
 
   // const handleRemoveFromCart = () => {
-  //   if (cartItemCount > 0) {
-  //     setCartItemCount((prevCount) => prevCount - 1);
+  //   if (props.quantity && props.quantity > 0) {
   //     removeFromCart(props.id);
   //   }
   // };
+
+  const handleRemoveFromCart = () => {
+    if (quantity > 0) {
+      removeFromCart(props.id);
+      setQuantity((prevQuantity) => prevQuantity - 1);
+    }
+  };
+
+
+
 
   return (
     <div className="lg:flex lg:items-center mt-4 px-2 lg:px-0">
@@ -61,7 +82,7 @@ const CartItem = (props: any) => {
     <div className="card-body px-1 lg:px-12">
       <h2 className="card-title">{props.title}</h2>
       <p className="mt-2 mb-4 text-3xl">
-        ${(parseFloat(props.price) * cartItemCount).toFixed(2)}
+      ${(props.price)}
       </p>
       <div className="card-actions">
         <div className="btn-group">
@@ -69,7 +90,7 @@ const CartItem = (props: any) => {
             -
           </button>
           <button className="btn btn-ghost no-animation">
-            {cartItemCount}
+            {quantity}
           </button>
           <button className="btn btn-primary" onClick={handleAddToCart}>
             +
