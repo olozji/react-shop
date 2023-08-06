@@ -7,15 +7,21 @@ import { ProductData } from './ItemList';
 
 const CartList = (props:any & ProductData) => {
 
-  const product = useRecoilValue(productsState);
   const cartItems = useRecoilValue(cartState);
-  const cartItemCount = useRecoilValue(cartItemCountState);
   console.log(cartItems);
  
 
+   // 중복 없는 상품 리스트를 만듭니다.
+   const uniqueCartItems: ProductData[] = [];
+   cartItems.forEach((item:ProductData|any) => {
+     if (!uniqueCartItems.some((uniqueItem) => uniqueItem.id === item.id)) {
+       uniqueCartItems.push(item);
+     }
+   });
+
   const getTotalPrice = () => {
     let total = 0;
-    cartItems.forEach((item) => {
+    cartItems.forEach((item:ProductData|any) => {
       const price = parseFloat(item.price);
       total += price;
     });
@@ -26,15 +32,20 @@ const CartList = (props:any & ProductData) => {
     <>
     <div className="lg:flex justify-between mb-20">
     <div>
-      {cartItems.map((item: any) => (
+      {uniqueCartItems.map((item: ProductData |any) => (
         <CartItem
           image={item.image}
           id={item.id}
           key={item.id}
           price={item.price}
-          title={item.title}
-          quantity={props}
-        />
+          title={item.title} 
+          quantity={0} 
+          category={''} 
+          description={''} 
+          rating={{
+            rate: 0,
+            count: 0
+          }}                      />
       ))}
     </div>
     <div className="self-start shrink-0 flex items-center mt-10 mb-20">

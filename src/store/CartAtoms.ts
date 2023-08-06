@@ -1,4 +1,4 @@
-import { SetterOrUpdater, atom,selector,useRecoilState,useSetRecoilState } from "recoil";
+import { SetterOrUpdater, atom,selector } from "recoil";
 
 
 export interface ProductData {
@@ -20,7 +20,24 @@ export const cartState = atom<ProductData[]>({
     key:'cartState',
     default:[],
     
-    
+    // effects_UNSTABLE: [
+    //   ({ onSet }) => {
+    //     onSet((newCart) => {
+    //       // 중복된 상품을 하나로 합칩니다.
+    //       const uniqueCart = newCart.reduce((acc: ProductData[], currentItem: ProductData) => {
+    //         const existingProductIndex = acc.findIndex((item) => item.id === currentItem.id);
+    //         if (existingProductIndex !== -1) {
+    //           acc[existingProductIndex].quantity += currentItem.quantity || 1;
+    //         } else {
+    //           acc.push({ ...currentItem });
+    //         }
+    //         return acc;
+    //       }, []);
+  
+    //       return uniqueCart;
+    //     });
+    //   },
+    // ],
 })
 
 
@@ -28,6 +45,7 @@ export const cartState = atom<ProductData[]>({
 export const cartItemCountState = selector<number>({
     key:'cartItemCountState',
     get:({get}) => {
+      let totalCount = 0;
         const cart = get(cartState);
         return cart.length;
        

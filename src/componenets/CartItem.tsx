@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from 'react'
-import { useRecoilValue, useRecoilState,useSetRecoilState } from 'recoil';
-import { cartItemCountState, addToCart, removeFromCart, cartState, cartItemCountDefaultState } from '../store/CartAtoms';
+import {useState} from 'react'
+import { useRecoilState } from 'recoil';
+import { addToCart, removeFromCart, cartItemCountDefaultState } from '../store/CartAtoms';
 import {Link} from 'react-router-dom';
 
 
 export interface ProductData {
+  quantity:number;
   id:number;
   title:string;
   price:string;
@@ -15,16 +16,15 @@ export interface ProductData {
       rate: number;
       count: number;
     };
-    quantity:number;
 }
-
-
 
 
 const CartItem = (props:  ProductData) => {
 
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(props.quantity || 0);
   const [cartItemCount, setCartItemCount] = useRecoilState(cartItemCountDefaultState);
+  //const cartItemCount = useRecoilValue(cartItemCountState);
+
 
   const handleAddToCart = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);

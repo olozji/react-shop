@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 export interface ProductData {
   id:number;
   title:string;
-  price:string;
+  price?:string;
   category:string;
   description:string;
   image:string;
