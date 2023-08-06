@@ -1,6 +1,6 @@
 import {useState} from 'react'
-import { useRecoilState } from 'recoil';
-import { addToCart, removeFromCart, cartItemCountDefaultState } from '../store/CartAtoms';
+import { useRecoilState,useRecoilValue } from 'recoil';
+import { addToCart, removeFromCart, cartItemCountDefaultState, cartState, cartItemCountState } from '../store/CartAtoms';
 import {Link} from 'react-router-dom';
 
 
@@ -19,70 +19,28 @@ export interface ProductData {
 }
 
 
+
 const CartItem = (props:  ProductData) => {
 
   const [quantity, setQuantity] = useState(props.quantity || 0);
-  const [cartItemCount, setCartItemCount] = useRecoilState(cartItemCountDefaultState);
-  //const cartItemCount = useRecoilValue(cartItemCountState);
+  //const [cartItemCount, setCartItemCount] = useRecoilState(cartItemCountDefaultState);
+  const cartItemCount = useRecoilValue(cartItemCountState);
 
 
   const handleAddToCart = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
-    setCartItemCount((prevCount) => prevCount + 1);
+   // cartItemCount((prevCount:any) => prevCount + 1);
     addToCart({ ...props, quantity: quantity + 1 });
   };
 
   const handleRemoveFromCart = () => {
     if (quantity > 0) {
       setQuantity((prevQuantity) => prevQuantity - 1);
-      setCartItemCount((prevCount) => prevCount - 1);
+    //  setCartItemCount((prevCount:any) => prevCount - 1);
       removeFromCart(props.id);
     }
   };
 
-
-  //const cartItemCount = useRecoilValue(cartItemCountState);
-  //const setCartItemCount = useSetRecoilState(cartState);
-
-  // const cartItems = useRecoilValue(cartState);
-  // const setCartItems = useSetRecoilState(cartState);
-
-  // const [quantity, setQuantity] = useState(1);
-
-  //  // 장바구니에 해당 상품이 이미 담겨있는지 확인하는 함수
-  //  const isProductInCart = (productId: number) => {
-  //   return cartItems.some((item) => item.id === productId);
-  // };
-
-  // // 장바구니에 해당 상품의 수량을 가져오는 함수
-  // const getProductQuantityInCart = (productId: number) => {
-  //   const item = cartItems.find((item) => item.id === productId);
-  //   return item ? item.quantity : 0;
-  // };
-
-   // 상품 수량이 변경될 때마다 quantity 값을 업데이트
-  //  useEffect(() => {
-  //   setQuantity(getProductQuantityInCart(props.id));
-
-  // }, [cartItems, props.id]);
- 
-  // const handleAddToCart = () => {
-  //   addToCart({...props, quantity});
-  //   setQuantity((prevQuantity) => prevQuantity + 1);
-  // };
-
-  // const handleRemoveFromCart = () => {
-  //   if (props.quantity && props.quantity > 0) {
-  //     removeFromCart(props.id);
-  //   }
-  // };
-
-  // const handleRemoveFromCart = () => {
-  //   if (quantity > 0) {
-  //     removeFromCart(props.id);
-  //     setQuantity((prevQuantity) => prevQuantity - 1);
-  //   }
-  // };
 
 
 
@@ -111,7 +69,7 @@ const CartItem = (props:  ProductData) => {
             -
           </button>
           <button className="btn btn-ghost no-animation">
-            {quantity}
+            {cartItemCount}
           </button>
           <button className="btn btn-primary" onClick={handleAddToCart}>
             +

@@ -32,12 +32,8 @@ export const selectedProductState = atom<ProductData | null>({
       const selectedProductId = get(selectedProductState);
       const products = get(productsState);
       return products.find((product) => product.id === selectedProductId) || null;
-
-      
     },
   });
-
-
 
 
 interface PostState {

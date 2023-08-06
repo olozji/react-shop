@@ -8,6 +8,7 @@ import { ProductData } from './ItemList';
 const CartList = (props:any & ProductData) => {
 
   const cartItems = useRecoilValue(cartState);
+  const cartItemCount = useRecoilValue(cartItemCountState);
   console.log(cartItems);
  
 
@@ -17,6 +18,11 @@ const CartList = (props:any & ProductData) => {
      if (!uniqueCartItems.some((uniqueItem) => uniqueItem.id === item.id)) {
        uniqueCartItems.push(item);
      }
+   });
+
+   const quantities: { [key: number]: number } = {};
+   cartItems.forEach((item: ProductData | any) => {
+     quantities[item.id] = item.quantity;
    });
 
   const getTotalPrice = () => {
@@ -32,14 +38,14 @@ const CartList = (props:any & ProductData) => {
     <>
     <div className="lg:flex justify-between mb-20">
     <div>
-      {uniqueCartItems.map((item: ProductData |any) => (
+      {uniqueCartItems.map((item: ProductData | any ) => (
         <CartItem
           image={item.image}
           id={item.id}
           key={item.id}
           price={item.price}
           title={item.title} 
-          quantity={0} 
+          quantity={quantities[item.id]} 
           category={''} 
           description={''} 
           rating={{

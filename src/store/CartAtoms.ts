@@ -1,8 +1,8 @@
-import { SetterOrUpdater, atom,selector } from "recoil";
+import { useSetRecoilState,selectorFamily,SetterOrUpdater, atom,selector } from "recoil";
 
 
 export interface ProductData {
-    quantity: number;
+    quantity?: number;
     id?:number;
     title?:string;
     price?:string | number;
@@ -19,25 +19,6 @@ export interface ProductData {
 export const cartState = atom<ProductData[]>({
     key:'cartState',
     default:[],
-    
-    // effects_UNSTABLE: [
-    //   ({ onSet }) => {
-    //     onSet((newCart) => {
-    //       // 중복된 상품을 하나로 합칩니다.
-    //       const uniqueCart = newCart.reduce((acc: ProductData[], currentItem: ProductData) => {
-    //         const existingProductIndex = acc.findIndex((item) => item.id === currentItem.id);
-    //         if (existingProductIndex !== -1) {
-    //           acc[existingProductIndex].quantity += currentItem.quantity || 1;
-    //         } else {
-    //           acc.push({ ...currentItem });
-    //         }
-    //         return acc;
-    //       }, []);
-  
-    //       return uniqueCart;
-    //     });
-    //   },
-    // ],
 })
 
 
@@ -48,9 +29,11 @@ export const cartItemCountState = selector<number>({
       let totalCount = 0;
         const cart = get(cartState);
         return cart.length;
+      //  return cart.reduce((count, product) => count + product.quantity, 0);
        
     }
 })
+
 
 export const cartItemCountDefaultState = atom<number>({
   key: 'cartItemCountDefaultState',
@@ -66,12 +49,6 @@ export const addToCart = (product: ProductData) => {
   };
 };
 
-
-  // export const removeFromCart = (productId: number)  => {
-  //   return ({ set }: { set: (newCart: ProductData[] | ((prevCart: ProductData[]) => ProductData[])) => void }) => {
-  //     set((prevCart) => prevCart.filter((product) => product.id !== productId));
-  //   };
-  // }
 
 export const removeFromCart = (productId: number) => {
   return (set: SetterOrUpdater<ProductData[]>) => {
