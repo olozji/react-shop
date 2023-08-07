@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { addToCart, cartState, cartItemCountState } from '../store/CartAtoms';
 
 interface ProductData {
+  quantity?:any;
   id?: number;
   title?: string;
   price?: number | string;
@@ -16,7 +17,7 @@ interface ProductData {
     rate?: number;
     count?: number;
   };
-  quantity:number;
+  
 }
 
 

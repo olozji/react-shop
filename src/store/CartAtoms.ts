@@ -15,6 +15,10 @@ export interface ProductData {
       };
     }
 
+export interface CartItemQuantityState {
+  [key: number]: number;
+}
+
 // 장바구니 상태
 export const cartState = atom<ProductData[]>({
     key:'cartState',
@@ -55,3 +59,8 @@ export const removeFromCart = (productId: number) => {
     set((prevCart) => prevCart.filter((product) => product.id !== productId));
   };
 };
+
+export const cartItemQuantityState = atom<CartItemQuantityState>({
+  key: 'cartItemQuantityState',
+  default: {},
+});

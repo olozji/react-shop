@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 
 export interface ProductData {
+  
   id:number;
   title:string;
   price?:string;
@@ -15,6 +16,7 @@ export interface ProductData {
       rate: number;
       count: number;
     };
+    quantity:number;
 }
 
 const ItemList = ({page, category=''}: {page:string; category:string}) => {

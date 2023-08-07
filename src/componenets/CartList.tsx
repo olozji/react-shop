@@ -2,28 +2,51 @@ import React from 'react'
 import CartItem from './CartItem'
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { productsState } from '../store/ProductsAtoms';
-import { cartItemCountState, cartState } from '../store/CartAtoms';
-import { ProductData } from './ItemList';
+import { cartItemCountState, cartState,cartItemQuantityState } from '../store/CartAtoms';
+//import { ProductData } from './ItemList';
+
+export interface ProductData {
+  
+  id:number;
+  title:string;
+  price?:string;
+  category:string;
+  description:string;
+  image:string;
+  rating: {
+      rate: number;
+      count: number;
+    };
+    quantity?:number;
+}
 
 const CartList = (props:any & ProductData) => {
 
   const cartItems = useRecoilValue(cartState);
   const cartItemCount = useRecoilValue(cartItemCountState);
+  const quantities = useRecoilValue(cartItemQuantityState);
   console.log(cartItems);
  
 
    // 중복 없는 상품 리스트를 만듭니다.
-   const uniqueCartItems: ProductData[] = [];
-   cartItems.forEach((item:ProductData|any) => {
-     if (!uniqueCartItems.some((uniqueItem) => uniqueItem.id === item.id)) {
-       uniqueCartItems.push(item);
-     }
-   });
+  //  const uniqueCartItems: ProductData[] = [];
+  //  cartItems.forEach((item:ProductData|any) => {
+  //    if (!uniqueCartItems.some((uniqueItem) => uniqueItem.id === item.id)) {
+  //      uniqueCartItems.push({...item});
+  //    }
+  //  });
+  const uniqueCartItems: ProductData[] = [];
+  cartItems.forEach((item: ProductData | any) => {
+    if (!uniqueCartItems.some((uniqueItem) => uniqueItem.id === item.id)) {
+      uniqueCartItems.push({ ...item, quantity: quantities[item.id] || 0 });
+    }
+  });
 
-   const quantities: { [key: number]: number } = {};
-   cartItems.forEach((item: ProductData | any) => {
-     quantities[item.id] = item.quantity;
-   });
+  //  const quantities: { [key: number]: number } = {};
+  //  cartItems.forEach((item: ProductData | any) => {
+  //    quantities[item.id || 0] = item.quantity || 0;
+  //  });
+
 
   const getTotalPrice = () => {
     let total = 0;
@@ -45,7 +68,7 @@ const CartList = (props:any & ProductData) => {
           key={item.id}
           price={item.price}
           title={item.title} 
-          quantity={quantities[item.id]} 
+          quantity={quantities[item.id]  || 0} 
           category={''} 
           description={''} 
           rating={{

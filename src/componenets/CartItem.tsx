@@ -1,48 +1,49 @@
 import {useState} from 'react'
 import { useRecoilState,useRecoilValue } from 'recoil';
-import { addToCart, removeFromCart, cartItemCountDefaultState, cartState, cartItemCountState } from '../store/CartAtoms';
+import { cartItemQuantityState,addToCart, removeFromCart, cartItemCountDefaultState, cartState, cartItemCountState } from '../store/CartAtoms';
 import {Link} from 'react-router-dom';
+import { ProductData } from './ItemList';
 
 
-export interface ProductData {
-  quantity:number;
-  id:number;
-  title:string;
-  price:string;
-  category:string;
-  description:string;
-  image:string;
-  rating: {
-      rate: number;
-      count: number;
-    };
+
+interface CartItemProps extends ProductData {
+  id: number;
 }
 
 
 
-const CartItem = (props:  ProductData) => {
+const CartItem: React.FC<CartItemProps> = (props) => {
 
-  const [quantity, setQuantity] = useState(props.quantity || 0);
-  //const [cartItemCount, setCartItemCount] = useRecoilState(cartItemCountDefaultState);
+  //const [quantity, setQuantity] = useState(props.quantity || 0);
+  const cartItems = useRecoilValue(cartState);
   const cartItemCount = useRecoilValue(cartItemCountState);
 
+  const item = cartItems.find((item) => item.id === props.id);
+  const quantity = item ? item.quantity || 0 : 0;
+  // const handleAddToCart = () => {
+  //   setQuantity((prevQuantity) => prevQuantity + 1);
+  //  // cartItemCount((prevCount:any) => prevCount + 1);
+  //   addToCart({ ...props, quantity: quantity + 1 });
+  // };
 
+  // const handleRemoveFromCart = () => {
+  //   if (quantity > 0) {
+  //     setQuantity((prevQuantity) => prevQuantity - 1);
+  //   //  setCartItemCount((prevCount:any) => prevCount - 1);
+  //     removeFromCart(props.id);
+  //   }
+  // };
+
+ 
   const handleAddToCart = () => {
-    setQuantity((prevQuantity) => prevQuantity + 1);
-   // cartItemCount((prevCount:any) => prevCount + 1);
     addToCart({ ...props, quantity: quantity + 1 });
   };
 
   const handleRemoveFromCart = () => {
     if (quantity > 0) {
-      setQuantity((prevQuantity) => prevQuantity - 1);
-    //  setCartItemCount((prevCount:any) => prevCount - 1);
       removeFromCart(props.id);
     }
   };
-
-
-
 
 
 
@@ -65,11 +66,11 @@ const CartItem = (props:  ProductData) => {
       </p>
       <div className="card-actions">
         <div className="btn-group">
-          <button className="btn btn-primary" onClick={handleRemoveFromCart}>
+          <button className="btn btn-primary">
             -
           </button>
-          <button className="btn btn-ghost no-animation">
-            {cartItemCount}
+          <button className="btn btn-ghost no-animation" onClick={handleRemoveFromCart}>
+            {quantity}
           </button>
           <button className="btn btn-primary" onClick={handleAddToCart}>
             +

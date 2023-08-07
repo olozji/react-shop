@@ -1,0 +1,9 @@
+diff a/src/componenets/CartList.tsx b/src/componenets/CartList.tsx	(rejected hunks)
+@@ -8,6 +8,7 @@
+ const CartList = (props:any & ProductData) => {
+ 
+   const cartItems = useRecoilValue(cartState);
++  const cartItemCount = useRecoilValue(cartItemCountState);
+   console.log(cartItems);
+  
+ 

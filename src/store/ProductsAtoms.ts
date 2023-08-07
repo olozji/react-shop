@@ -13,6 +13,7 @@ export interface ProductData {
         rate?: number;
         count?: number;
       };
+      quantity?:number;
 }
 
 
@@ -32,8 +33,12 @@ export const selectedProductState = atom<ProductData | null>({
       const selectedProductId = get(selectedProductState);
       const products = get(productsState);
       return products.find((product) => product.id === selectedProductId) || null;
+
+      
     },
   });
+
+
 
 
 interface PostState {
