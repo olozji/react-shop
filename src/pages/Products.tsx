@@ -21,7 +21,7 @@ interface ProductData {
 }
 
 
-const Products = () => {
+const Products : React.FC<ProductData> = (props) => {
 
 
   const selectedProduct = useRecoilValue(selectedProductState) as ProductData;
@@ -35,6 +35,12 @@ const Products = () => {
    const handleAddToCart = () => {
       addToCartHandler(setCart);
    }
+
+
+
+ 
+
+
 
   return (
     <section>

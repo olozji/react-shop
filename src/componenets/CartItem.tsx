@@ -1,6 +1,6 @@
 import {useState} from 'react'
-import { useRecoilState,useRecoilValue } from 'recoil';
-import { cartItemQuantityState,addToCart, removeFromCart, cartItemCountDefaultState, cartState, cartItemCountState } from '../store/CartAtoms';
+import { useRecoilState,useRecoilValue,useSetRecoilState } from 'recoil';
+import {addToCart, removeFromCart, cartState, cartItemCountState } from '../store/CartAtoms';
 import {Link} from 'react-router-dom';
 import { ProductData } from './ItemList';
 
@@ -15,11 +15,15 @@ interface CartItemProps extends ProductData {
 const CartItem: React.FC<CartItemProps> = (props) => {
 
   //const [quantity, setQuantity] = useState(props.quantity || 0);
-  const cartItems = useRecoilValue(cartState);
+  //const cartItems = useRecoilValue(cartState);
   const cartItemCount = useRecoilValue(cartItemCountState);
-
+  const setCart = useSetRecoilState(cartState);
+  const [cartItems, setCartItems] = useRecoilState(cartState);
+  const itemIndex = cartItems.findIndex((item) => item.id === props.id);
   const item = cartItems.find((item) => item.id === props.id);
   const quantity = item ? item.quantity || 0 : 0;
+
+
   // const handleAddToCart = () => {
   //   setQuantity((prevQuantity) => prevQuantity + 1);
   //  // cartItemCount((prevCount:any) => prevCount + 1);
@@ -34,16 +38,42 @@ const CartItem: React.FC<CartItemProps> = (props) => {
   //   }
   // };
 
+
+
  
+  // const handleAddToCart = () => {
+  //   addToCart({ ...props, quantity: quantity + 1 });
+  // };
+
+  // const handleRemoveFromCart = () => {
+  //   if (quantity > 0) {
+  //     removeFromCart(props.id);
+  //   }
+  // };
+
   const handleAddToCart = () => {
-    addToCart({ ...props, quantity: quantity + 1 });
+    setCartItems(cartItems);
   };
 
   const handleRemoveFromCart = () => {
-    if (quantity > 0) {
-      removeFromCart(props.id);
+    setCartItems(cartItems);
+  };
+
+  const handleIncrement = () => {
+    const updatedItems = [...cartItems];
+    updatedItems[itemIndex] = { ...item, quantity: quantity + 1 };
+    setCartItems(updatedItems);
+  };
+
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      const updatedItems = [...cartItems];
+      updatedItems[itemIndex] = { ...item, quantity: quantity - 1 };
+      setCartItems(updatedItems);
     }
   };
+
+  
 
 
 
@@ -66,13 +96,13 @@ const CartItem: React.FC<CartItemProps> = (props) => {
       </p>
       <div className="card-actions">
         <div className="btn-group">
-          <button className="btn btn-primary">
+          <button className="btn btn-primary" onClick={handleDecrement}>
             -
           </button>
           <button className="btn btn-ghost no-animation" onClick={handleRemoveFromCart}>
             {quantity}
           </button>
-          <button className="btn btn-primary" onClick={handleAddToCart}>
+          <button className="btn btn-primary" onClick={handleIncrement}>
             +
           </button>
         </div>
