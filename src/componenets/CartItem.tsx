@@ -65,18 +65,18 @@ const CartItem: React.FC<CartItemProps> = (props) => {
     setCartItems(updatedItems);
   };
 
+
   const handleDecrement = () => {
     if (quantity > 1) {
       const updatedItems = [...cartItems];
       updatedItems[itemIndex] = { ...item, quantity: quantity - 1 };
       setCartItems(updatedItems);
+    } else if (quantity === 1) {
+      const updatedItems = cartItems.filter((_, index) => index !== itemIndex);
+      setCartItems(updatedItems);
     }
   };
-
   
-
-
-
 
   return (
     <div className="lg:flex lg:items-center mt-4 px-2 lg:px-0">

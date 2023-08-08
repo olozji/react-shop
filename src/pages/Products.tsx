@@ -43,7 +43,7 @@ const Products : React.FC<ProductData> = (props) => {
 
 
   return (
-    <section>
+    <section className='pt-4 lg:pt-5 pb-4 lg:pb-8 px-4 xl:px-2 xl:container mx-auto'>
     <div className="text-sm breadcrumbs">
     <ul>
       <li>{selectedProduct?.title}</li>

@@ -40,7 +40,7 @@ const ItemList = ({page, category=''}: {page:string; category:string}) => {
   
   return (
    
-    <section className='pt-20'>
+    <section className='pt-20 lg:pt-5 pb-4 lg:pb-8 px-4 xl:px-2 xl:container mx-auto'>
     <h2 className='m-2 lg:mb-8 text-3xl lg:text-4xl text-center font-bold'>
       {categoryName}
       </h2>

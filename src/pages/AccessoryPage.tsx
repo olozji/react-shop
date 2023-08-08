@@ -36,9 +36,12 @@ const AccessoryPage = ({category=''}:{category:string}) => {
   },[categoryName])
 
   return (
-    <section className='pt-20'>
+    <section className='pt-20 lg:pt-5 pb-4 lg:pb-8 px-4 xl:px-2 xl:container mx-auto'>
       <h2>홈 &lt; {categoryName}</h2>
-    <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-4 item_list'>
+       <h2 className="mb-5 lg:mb-8 text-3xl lg:text-4xl text-center font-bold">
+            {categoryName}
+          </h2>
+    <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-4 item_list lg:pt-20'>
     {accessoryProducts.map((product:ProductData) => (
       <Link to={`/products/${product.id}`} key={product.id} onClick={() => setSelectedProduct(product)}>
     <div className="card shadow-xl m-2" key={product.id}>

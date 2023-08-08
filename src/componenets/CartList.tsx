@@ -1,6 +1,6 @@
 import React,{useEffect} from 'react'
 import CartItem from './CartItem'
-import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { useSetRecoilState, useRecoilValue, useRecoilState} from 'recoil';
 import { productsState } from '../store/ProductsAtoms';
 import { cartItemCountState, cartState,cartItemQuantityState } from '../store/CartAtoms';
 //import { ProductData } from './ItemList';
@@ -23,6 +23,7 @@ export interface ProductData {
 const CartList = (props:any & ProductData) => {
 
   const cartItems = useRecoilValue(cartState);
+  const [cartItemss, setCartItems] = useRecoilState(cartState);
   const cartItemCount = useRecoilValue(cartItemCountState);
   const quantities = useRecoilValue(cartItemQuantityState);
   console.log(cartItems);
@@ -48,13 +49,17 @@ const CartList = (props:any & ProductData) => {
 
   useEffect(() => {
     getTotalPrice();
-  }, [cartItems, quantities, cartItemCount]);
+  }, [cartItems, quantities]);
 
-  const totalCartPrice = uniqueCartItems.reduce(
+  const totalCartPrice = cartItems.reduce(
     (total, item:any) => total + (parseFloat(item.price) * item.quantity || 0),
     0
   );
 
+  const CartItemAllBuy = () => {
+      setCartItems([]);
+  };
+  
   return (
     <>
     <div className="lg:flex justify-between mb-20">
@@ -77,7 +82,7 @@ const CartList = (props:any & ProductData) => {
     </div>
     <div className="self-start shrink-0 flex items-center mt-10 mb-20">
       <span className="text-xl md:text-2xl">
-      총 : ${getTotalPrice().toFixed(2)}
+      총 : ${totalCartPrice.toFixed(2)}
       </span>
       <label
         htmlFor="confirm-modal"
@@ -97,6 +102,7 @@ const CartList = (props:any & ProductData) => {
           <label
             htmlFor="confirm-modal"
             className="btn btn-primary"
+            onClick={CartItemAllBuy}
           >
             네
           </label>
