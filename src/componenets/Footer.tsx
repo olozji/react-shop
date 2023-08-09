@@ -2,7 +2,8 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <footer className='footer footer-center p-10 bg-base-200 text-content'>
+    <div className='h-auto min-h-full pb-80'>
+    <footer className='footer footer-center relative h-4/5 p-10 bg-base-200 text-content translate'>
         <div>
             <p>footer</p>
         </div>
@@ -12,6 +13,7 @@ const Footer = () => {
             <li>item</li>
         </ul>
     </footer>
+    </div>
   )
 }
 
