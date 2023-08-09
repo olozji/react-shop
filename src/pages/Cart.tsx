@@ -12,6 +12,7 @@ const Cart = () => {
   console.log('cartItemCount:' , cartItemCountState);
 
   return (
+    <section className="main">
     <section className='pt-16'>
     <div className="text-sm breadcrumbs">
     <ul>
@@ -22,6 +23,7 @@ const Cart = () => {
   <div className="pt-4 lg:pt-5 pb-4 lg:pb-8 px-4 xl:px-2 xl:container mx-auto">
    <div>{cartItemCount === 0 ? <CartEmpty/> : <CartList props={cartItemCount}/>}</div>
   </div>
+</section>
 </section>
   )
 }

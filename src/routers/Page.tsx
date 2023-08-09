@@ -9,7 +9,7 @@ import Cart from '../pages/Cart';
 
 const Page = () => {
   return (
-    <div>
+    <main>
       <Routes>
         <Route path='/' element={<Home/>}></Route>
         <Route path='/fashion' element={<FashionPage category={"men's clothing" || "women's clothing"}/>}></Route>
@@ -18,7 +18,7 @@ const Page = () => {
         <Route path="/products/:id" element={<Products />}></Route> 
         <Route path='/cart' element={<Cart />}></Route>     
       </Routes>
-    </div>
+    </main>
   )
 }
 
