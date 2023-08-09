@@ -18,10 +18,6 @@ const Cart = () => {
             <Link to ='/'>담으러 가기</Link>
             </button>
       </div>
-      <div className='grid justify-items-end'>
-        총 {}
-        <button className='btn btn-primary'>구매하기</button>
-      </div>
     </div>
   </div>
 </section>

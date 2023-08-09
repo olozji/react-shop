@@ -77,7 +77,7 @@ export const categoryNameSelector = selector({
         const category = get(categoryState);
 
         switch(category) {
-            case "men's clothing" && "women's clothing":
+            case "men's clothing" : case "women's clothing":
                 return '패션';
             case 'electronics':
                 return '디지털';

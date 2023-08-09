@@ -5,9 +5,23 @@ import { useRecoilValue } from 'recoil';
 import { cartItemCountState } from '../store/CartAtoms';
 import Search from './Search';
 
+interface ProductData {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  rating: {
+    rate: number;
+    count: number;
+  };
+  quantity:number;
+}
 
-const NavBar = () => {
 
+const NavBar = (props: {products:ProductData[]}) => {
+  console.log('Products:', props.products);
   const {theme, setTheme} = useContext(themeContext); 
 
   const cartItemCount = useRecoilValue(cartItemCountState);
@@ -78,7 +92,9 @@ const NavBar = () => {
             <button onClick={handleTheme}>다크</button>
           )}
         </div>
-        <Search/>
+
+        <Search products={props.products}/>
+
         <label tabIndex={0} className="btn btn-ghost btn-circle" id="cart">
           <Link to="/cart" className="indicator">
             <svg

@@ -80,7 +80,7 @@ const CartItem: React.FC<CartItemProps> = (props) => {
 
   return (
     <div className="lg:flex lg:items-center mt-4 px-2 lg:px-0">
-    <Link to={'/product/' + props.id}>
+    <Link to={`/products/${props.id}`} key={props.id}>
       <figure className="w-56 min-w-full flex-shrink-0 rounded-2xl overflow-hidden px-4 py-4 bg-white">
         <img
           src={props.image}
