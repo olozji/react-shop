@@ -47,7 +47,7 @@ const FashionPage = ({category=''}: {category:string}) => {
      <h2 className="mb-5 lg:mb-8 text-3xl lg:text-4xl text-center font-bold">
             {categoryName}
           </h2>
-    <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4 item_list lg:pt-20'>
+    <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-2 item_list lg:pt-20'>
     {fashionProducts.map((product:ProductData) => (
   
     <Link to={`/products/${product.id}`} key={product.id} onClick={() => setSelectedProduct(product)}>
