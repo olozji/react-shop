@@ -4,6 +4,7 @@ import { getPost, productListState, productsState, selectedProductState } from '
 import { Navigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { addToCart, cartState, cartItemCountState } from '../store/CartAtoms';
+import styled from 'styled-components';
 
 interface ProductData {
   quantity?:any;
@@ -74,30 +75,31 @@ const Products : React.FC<ProductData> = (props) => {
 
 
   return (
-    <section className="">
-    <section className='pt-16 lg:pt-5 pb-4 lg:pb-8 px-4 xl:px-2 xl:container mx-auto'>
-    <div className="text-sm breadcrumbs">
+    <Wrraper>
+    <section className="main pt-16">
+    <section className='pt-4 lg:pt-5 pb-4 lg:pb-20 px-4 xl:px-2 xl:container mx-auto'>
+    <div className="text-base breadcrumbs">
     <ul>
       <li>{categoryName}  &lt; {selectedProduct?.title}</li>
     </ul>
   </div>
   <div className="lg:flex lg:items-center mt-6 md:mt-14 px-2 lg:px-0">
-    <figure className="flex-shrink-0 rounded-2xl overflow-hidden px-4 py-4 bg-white view_image">
+    <figure className="flex-shrink-0 rounded-2xl overflow-hidden px-4 py-4 bg-white view_image w-96">
       <img
         src={selectedProduct?.image}
         alt={selectedProduct?.title}
-        className="object-contain w-full h-72"
+        className="object-contain w-full h-80"
       />
     </figure>
     <div className="card-body px-1 lg:px-12">
-      <h2 className="card-title">
+      <h2 className="card-title text-3xl">
         {selectedProduct?.title}
         <span className="badge badge-accent ml-2">NEW</span>
       </h2>
-      <p>{selectedProduct?.description}</p>
+      <p className='text-2xl'>{selectedProduct?.description}</p>
       <div className="flex items-center mt-3">
         <div className="rating rating-half">{ratingStar()}</div>
-        <div className="ml-2">
+        <div className="ml-2 text-xl">
           {selectedProduct?.rating?.rate} / {selectedProduct?.rating?.count} 참여
         </div>
       </div>
@@ -106,7 +108,7 @@ const Products : React.FC<ProductData> = (props) => {
         <button className="btn btn-primary" onClick={handleAddToCart}>
           장바구니에 담기
         </button>
-        <button className="btn btn-primary">
+        <button className="btn btn-outline ml-1">
         <Link to ={'/cart'}>장바구니로 이동</Link>
         </button>
       </div>
@@ -114,7 +116,12 @@ const Products : React.FC<ProductData> = (props) => {
   </div>
 </section>
 </section>
+</Wrraper>
   )
 }
+
+export const Wrraper = styled.div`
+  min-height: calc(100vh - 4rem - 224px);
+`
 
 export default Products

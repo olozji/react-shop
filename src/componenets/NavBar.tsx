@@ -4,6 +4,7 @@ import {themeContext} from '../App';
 import { useRecoilValue } from 'recoil';
 import { cartItemCountState } from '../store/CartAtoms';
 import Search from './Search';
+import { getPost } from '../store/ProductsAtoms';
 
 interface ProductData {
   id: number;
@@ -25,6 +26,7 @@ const NavBar = (props: {products:ProductData[]}) => {
   const {theme, setTheme} = useContext(themeContext); 
 
   const cartItemCount = useRecoilValue(cartItemCountState);
+  const fetchProductData = useRecoilValue(getPost);
   
   const handleTheme = () => {
     switch(theme) {
@@ -93,7 +95,7 @@ const NavBar = (props: {products:ProductData[]}) => {
           )}
         </div>
 
-        <Search products={props.products}/>
+        <Search products={fetchProductData}/>
 
         <label tabIndex={0} className="btn btn-ghost btn-circle" id="cart">
           <Link to="/cart" className="indicator">

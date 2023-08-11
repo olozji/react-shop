@@ -24,6 +24,7 @@ function App() {
 const [theme, setTheme] = useState<string>('light');
 const fetchProductData = useRecoilValue(getPost);
 
+
   return (
     <themeContext.Provider value={{ theme, setTheme }}>
       <div data-theme={theme}>

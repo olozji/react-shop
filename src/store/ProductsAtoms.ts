@@ -5,7 +5,7 @@ import { atom, selector } from "recoil"
 export interface ProductData {
     id?:number;
     title?:string;
-    price?:string;
+    price?:string | number;
     category?:string;
     description?:string;
     image?:string;

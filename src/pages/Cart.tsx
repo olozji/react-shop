@@ -4,7 +4,7 @@ import CartEmpty from '../componenets/CartEmpty';
 import CartList from '../componenets/CartList';
 import { useRecoilValue } from 'recoil';
 import { cartItemCountState } from '../store/CartAtoms';
-
+import styled from 'styled-components';
 
 const Cart = () => {
 
@@ -12,8 +12,9 @@ const Cart = () => {
   console.log('cartItemCount:' , cartItemCountState);
 
   return (
-    <section className="main">
-    <section className='pt-16'>
+    <Wrraper>
+    <section className="main pt-16">
+    <section className='pt-4 lg:pt-5 pb-4 lg:pb-20 px-4 xl:px-2 xl:container mx-auto'>
     <div className="text-sm breadcrumbs">
     <ul>
       <li>홈</li>
@@ -25,7 +26,12 @@ const Cart = () => {
   </div>
 </section>
 </section>
+</Wrraper>
   )
 }
+
+export const Wrraper = styled.div`
+  min-height: calc(100vh - 4rem - 224px);
+`
 
 export default Cart
