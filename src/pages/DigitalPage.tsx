@@ -1,6 +1,6 @@
 import React ,{useEffect , useState}from 'react'
 import { useRecoilValue, useRecoilState } from 'recoil';
-import {categoryNameSelector, categoryState, getPost ,selectedProductState} from '../store/ProductsAtoms'
+import { getPost ,selectedProductState} from '../store/ProductsAtoms'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 

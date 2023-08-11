@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from 'react'
-import { RecoilState, SetterOrUpdater, useRecoilState, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from 'recoil';
-import { getPost, productListState, productsState, selectedProductState } from '../store/ProductsAtoms';
-import { Navigate, useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { getPost, productsState, selectedProductState } from '../store/ProductsAtoms';
+import { Link, useParams } from 'react-router-dom';
 import { addToCart, cartState, cartItemCountState } from '../store/CartAtoms';
 import styled from 'styled-components';
 
@@ -24,13 +23,16 @@ interface ProductData {
 
 const Products : React.FC<ProductData> = (props) => {
 
+  const { productId } = useParams(); // URL에서 productId 추출
   const [categoryName, setCategoryName] = useState('');
   const selectedProduct = useRecoilValue(selectedProductState) as ProductData;
+  
   const cartItemCount = useRecoilValue(cartItemCountState); 
   const setCart = useSetRecoilState(cartState);
   const addToCartHandler = addToCart(selectedProduct);
-
- 
+  const fetchProductData = useRecoilValue(getPost);
+  const [fetchedProductData, setFetchedProductData] = useState<ProductData[]>([]);
+  const [selectedProductId, setSelectedProductId] = useRecoilState(selectedProductState);
 
   console.log(selectedProduct);
   console.log('cartItemCount:', cartItemCount);
@@ -71,8 +73,24 @@ const Products : React.FC<ProductData> = (props) => {
     } else if (selectedProduct?.category === 'jewelery') {
       setCategoryName('액세서리');
     } 
-  },[categoryName])
+  },[categoryName]);
 
+
+  useEffect(() => {
+    // Fetch product data using getPost atom
+    const fetchData = async () => {
+      try {
+        const productData = await fetchProductData(productId);
+        // Update the fetched product data state
+        setFetchedProductData(productData);
+      } catch (error) {
+        // Handle errors if needed
+        console.error('Error fetching product data:', error);
+      }
+    };
+
+    fetchData(); // Call the fetchData function
+  }, [productId, fetchProductData]); 
 
   return (
     <Wrraper>

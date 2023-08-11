@@ -33,29 +33,8 @@ export const selectedProductState = atom<ProductData | null>({
       const selectedProductId = get(selectedProductState);
       const products = get(productsState);
       return products.find((product) => product.id === selectedProductId) || null;
-
-      
     },
   });
-
-
-
-
-interface PostState {
-    loading:boolean;
-    data:ProductData[] | null;
-    error: Error | null;
-}
-
-
-export const productListState = atom<PostState>({
-    key:'productListState',
-    default:{
-        loading:false,
-        data:null,
-        error:null,
-    }
-})
 
 export const getPost = selector({
     key:'getPost',
@@ -66,27 +45,5 @@ export const getPost = selector({
     }
 }) ;
 
-export const categoryState = atom({
-    key:'categoryName',
-    default:''
-})
-
-export const categoryNameSelector = selector({
-    key:'categoryNameSelector',
-    get: ({get}) => {
-        const category = get(categoryState);
-
-        switch(category) {
-            case "men's clothing" : case "women's clothing":
-                return '패션';
-            case 'electronics':
-                return '디지털';
-            case 'jewelery':
-                return '액세서리';
-            default:
-                return '';
-        }
-    }
-})
 
 

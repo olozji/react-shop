@@ -21,12 +21,11 @@ interface ProductData {
 }
 
 
-const NavBar = (props: {products:ProductData[]}) => {
-  console.log('Products:', props.products);
+const NavBar = () => {
+  
   const {theme, setTheme} = useContext(themeContext); 
 
   const cartItemCount = useRecoilValue(cartItemCountState);
-  const fetchProductData = useRecoilValue(getPost);
   
   const handleTheme = () => {
     switch(theme) {
@@ -95,7 +94,7 @@ const NavBar = (props: {products:ProductData[]}) => {
           )}
         </div>
 
-        <Search products={fetchProductData}/>
+        <Search />
 
         <label tabIndex={0} className="btn btn-ghost btn-circle" id="cart">
           <Link to="/cart" className="indicator">
