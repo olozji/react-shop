@@ -87,7 +87,7 @@ const Products : React.FC<ProductData> = (props) => {
 
 
   useEffect(() => {
-    if (selectedProduct?.category === "men's clothing" && "women's clothing") {
+    if (selectedProduct?.category === "men's clothing" || selectedProduct?.category === "women's clothing") {
       setCategoryName('패션');
     } else if (selectedProduct?.category === 'electronics') {
       setCategoryName('디지털');
