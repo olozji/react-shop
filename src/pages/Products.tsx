@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { getPost, productsState, selectedProductState } from '../store/ProductsAtoms';
+import { getPost, getSelectedProduct, productsState, selectedProductState } from '../store/ProductsAtoms';
 import { Link, useParams } from 'react-router-dom';
 import { addToCart, cartState, cartItemCountState } from '../store/CartAtoms';
 import styled from 'styled-components';
@@ -23,16 +23,16 @@ interface ProductData {
 
 const Products : React.FC<ProductData> = (props) => {
 
-  const { productId } = useParams(); // URL에서 productId 추출
+  const { id } = useParams(); // URL에서 productId 추출
   const [categoryName, setCategoryName] = useState('');
-  const selectedProduct = useRecoilValue(selectedProductState) as ProductData;
-  
+  //const selectedProduct = useRecoilValue(selectedProductState) as ProductData;
+  const [selectedProduct, setSelectedProduct]:any = useRecoilState(selectedProductState);
   const cartItemCount = useRecoilValue(cartItemCountState); 
   const setCart = useSetRecoilState(cartState);
   const addToCartHandler = addToCart(selectedProduct);
+ 
   const fetchProductData = useRecoilValue(getPost);
-  const [fetchedProductData, setFetchedProductData] = useState<ProductData[]>([]);
-  const [selectedProductId, setSelectedProductId] = useRecoilState(selectedProductState);
+  const fetchedProductData = useRecoilValue(getSelectedProduct);
 
   console.log(selectedProduct);
   console.log('cartItemCount:', cartItemCount);
@@ -65,6 +65,18 @@ const Products : React.FC<ProductData> = (props) => {
   };
 
 
+  const fetchData = async (productId: number) => {
+    try {
+      const response = await fetch(`https://fakestoreapi.com/products/${productId}`);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+
+
   useEffect(() => {
     if (selectedProduct?.category === "men's clothing" && "women's clothing") {
       setCategoryName('패션');
@@ -73,24 +85,23 @@ const Products : React.FC<ProductData> = (props) => {
     } else if (selectedProduct?.category === 'jewelery') {
       setCategoryName('액세서리');
     } 
-  },[categoryName]);
-
+  },[selectedProduct]);
 
   useEffect(() => {
-    // Fetch product data using getPost atom
-    const fetchData = async () => {
+    const fetchProductData = async () => {
       try {
-        const productData = await fetchProductData(productId);
-        // Update the fetched product data state
-        setFetchedProductData(productData);
+        const productData = await fetchData(Number(id));
+        setSelectedProduct(productData || null);
       } catch (error) {
-        // Handle errors if needed
         console.error('Error fetching product data:', error);
       }
     };
 
-    fetchData(); // Call the fetchData function
-  }, [productId, fetchProductData]); 
+    fetchProductData();
+  }, [id, setSelectedProduct]);
+
+ 
+
 
   return (
     <Wrraper>
