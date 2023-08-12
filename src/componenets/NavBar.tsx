@@ -1,4 +1,6 @@
 import React ,{useContext} from 'react'
+import darkThemeButton from '../assets/theme/dark.svg';
+import lightThemeButton from '../assets/theme/light.svg';
 import { Link } from 'react-router-dom';
 import {themeContext} from '../App';
 import { useRecoilValue } from 'recoil';
@@ -44,8 +46,7 @@ const NavBar = () => {
 
 
   return (
-    <>
-    <div className="navbar sticky top-0 z-10 bg-base-200" data-theme={theme}>
+    <nav className="navbar sticky top-0 z-10 bg-base-200" data-theme={theme}>
       <div className="dropdown md:hidden" id="category_drop-down">
         <label tabIndex={0} className="btn btn-ghost btn-circle">
           <svg
@@ -78,22 +79,35 @@ const NavBar = () => {
         </ul>
       </div>
 
-   <div className='grow flex flex-row mx-8'>
-        <h1 className='mx-8'><Link to='/'>React Shopping Shop</Link></h1>
-        <div className='mx-8'><Link to='/fashion'>패션</Link></div>
-        <div className='mx-8'><Link to='/accessory'>악세사리</Link></div>
-        <div className='mx-8'><Link to='/digital'>디지털</Link></div>
-        
+   <div className='flex-none hidden md:block'>
+    <ul className='menu menu-horizontal p-0'>
+        <h1 className='self-center text-2xl font-semibold whitespace-nowrap dark:text-white mx-8'><Link to='/'>React Shopping Shop</Link></h1>
+        <div className='block py-2 pl-3 pr-4 font-semibold text-white-900 rounded hover:bg-gray-100 md:hover:bg-transparent dark:border-gray-700 mx-8'><Link to='/fashion'>패션</Link></div>
+        <div className='block py-2 pl-3 pr-4 font-semibold text-white-900 rounded hover:bg-gray-100 md:hover:bg-transparent dark:border-gray-700 mx-8'><Link to='/accessory'>악세사리</Link></div>
+        <div className='block py-2 pl-3 pr-4 font-semibold text-white-900 rounded hover:bg-gray-100 md:hover:bg-transparent dark:border-gray-700 mx-8'><Link to='/digital'>디지털</Link></div>
+        </ul>
+        </div>
         <div className="grow" id="space"></div>
 
-        <div className="mr-5 cursor-pointer flex-none">
+        <div className="mr-5 cursor-pointer ">
           {theme === 'light' ? (
-            <button onClick={handleTheme}>라이트</button>
+             <img
+             src={darkThemeButton}
+             className="w-5 h-5"
+             alt="다크모드"
+             onClick={handleTheme}
+           />
           ) : (
-            <button onClick={handleTheme}>다크</button>
+            <img
+            src={lightThemeButton}
+            className="w-5 h-5"
+            alt="라이트모드"
+            onClick={handleTheme}
+          />
           )}
+         
         </div>
-
+    
         <Search />
 
         <label tabIndex={0} className="btn btn-ghost btn-circle" id="cart">
@@ -116,9 +130,7 @@ const NavBar = () => {
             </span>
           </Link>
         </label>
-      </div>
-      </div>
-      </>
+      </nav>
    
   )
 }

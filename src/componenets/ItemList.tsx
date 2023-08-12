@@ -51,14 +51,14 @@ const ItemList = ({page, category=''}: {page:string; category:string}) => {
     {allProductsSlice.map((product:ProductData) => (
       <Wrapper key={product.id}>
       <Link to={`/products/${product.id}`} key={product.id} onClick={() => setSelectedProduct(product)}>
-    <div className="card shadow-xl m-2" key={product.id}>
+    <div className="card shadow-xl m-2 " key={product.id}>
         <figure className='h-72 bg-white'>
         <img 
         className='max-h-[100%] hover:scale-110 ease-linear duration-200"' src={product.image}/>
         </figure>
-         <div className="card-body h-52">
-         <h2>{product.title}</h2>
-        <h2 className='card-title text-base'>${product.price}</h2> 
+         <div className="card-body h-52 items-center">
+         <h2 className='card-title lg:text-xl md:text-sm'>{product.title}</h2>
+        <h2 className='text-base font-bold lg:text-3xl md:text-sm'>${product.price}</h2> 
       </div>
     </div>
     </Link> 

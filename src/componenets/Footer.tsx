@@ -325,7 +325,7 @@ const  Footer= () => {
   
         {/* 4. 저작권 */}
         <div>
-          <p>Copyright © 2022 - Zero Base</p>
+          <p>Copyright © 2023 - Zero Base</p>
         </div>
       </footer>
     );
