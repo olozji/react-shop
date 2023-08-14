@@ -5,8 +5,7 @@ import { Carousel } from 'react-responsive-carousel'
 import { Link, To } from 'react-router-dom';
 
 
-const carouselSlide = slideData.map((image: 
-  { src: string | undefined; title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; content: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; path: To; }) => (
+const carouselSlide = slideData.map((image:any) =>
   <div className="h-80 md:h-full">
       <img src={image.src} className="h-full" />
       <div className="absolute transform -translate-y-1/2 md:left-20 top-1/2">
@@ -19,7 +18,7 @@ const carouselSlide = slideData.map((image:
         </div>
       </div>
     </div>
-))
+)
 
 const renderCarousel = () => {
 
