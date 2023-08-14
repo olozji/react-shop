@@ -3,7 +3,7 @@ export const slideData = [
         id:1,
         title:'최신 트렌드의 다양한 종류의 옷',
         content:'최신 유행 상품들을 만나보세요!',
-        src:'/carousel/man-using-external-storage-used.jpg',
+        src:'/carousel/fast-fashion-vs-slow-sustainable-fashion',
         alt: "image1",
         path:'/fashion'
     },
