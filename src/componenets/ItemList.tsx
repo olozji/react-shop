@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react'
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { getPost, selectedProductState } from '../store/ProductsAtoms';
+import { getData, selectedProductState } from '../store/ProductsAtoms';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -22,7 +22,7 @@ export interface ProductData {
 
 const ItemList = ({page, category=''}: {page:string; category:string}) => {
   
-  const allProducts = useRecoilValue(getPost);
+  const allProducts = useRecoilValue(getData);
   const allProductsSlice = allProducts.filter((product:ProductData) => product.category === category);
 
   const [selectedProduct, setSelectedProduct] = useRecoilState(selectedProductState);
@@ -50,11 +50,14 @@ const ItemList = ({page, category=''}: {page:string; category:string}) => {
     <div className='grid gap-8 md:grid-cols-2 lg:grid-cols-2 item_list'>
     {allProductsSlice.map((product:ProductData) => (
       <Wrapper key={product.id}>
-      <Link to={`/products/${product.id}`} key={product.id} onClick={() => setSelectedProduct(product)}>
+      <Link to={`/products/${product.id}`} 
+            key={product.id} 
+            onClick={() => setSelectedProduct(product)}>
     <div className="card shadow-xl m-2 " key={product.id}>
         <figure className='h-72 bg-white'>
         <img 
-        className='max-h-[100%] hover:scale-110 ease-linear duration-200"' src={product.image}/>
+          className='max-h-[100%] hover:scale-110 ease-linear duration-200"' 
+          src={product.image}/>
         </figure>
          <div className="card-body h-52 items-center">
          <h2 className='card-title lg:text-xl md:text-sm'>{product.title}</h2>

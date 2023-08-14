@@ -1,6 +1,6 @@
 import React ,{useEffect , useState}from 'react'
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { getPost ,selectedProductState} from '../store/ProductsAtoms'
+import { getData ,selectedProductState} from '../store/ProductsAtoms'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -21,7 +21,7 @@ export interface ProductData {
 
 const DigitalPage = ({category=''}:{category:string}) => {
 
-    const allProducts = useRecoilValue(getPost);
+    const allProducts = useRecoilValue(getData);
     const digitalProducts = allProducts.filter((product:ProductData) => product.category === "electronics");
 
     const [selectedProduct, setSelectedProduct] = useRecoilState(selectedProductState)
@@ -50,15 +50,15 @@ const DigitalPage = ({category=''}:{category:string}) => {
             {categoryName}
       </h2>
       <nav className="flex" aria-label="Breadcrumb">
-  <ol className="inline-flex items-center space-x-1 md:space-x-3">
-    <li className="inline-flex items-center">
-      <a href="#" className="inline-flex items-center text-sm font-medium">
-        <svg className="w-3 h-3 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-          <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
-        </svg>
-        홈
-      </a>
-    </li>
+        <ol className="inline-flex items-center space-x-1 md:space-x-3">
+          <li className="inline-flex items-center">
+            <a href="#" className="inline-flex items-center text-sm font-medium">
+              <svg className="w-3 h-3 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
+          </svg>
+          홈
+        </a>
+      </li>
     <li>
       <div className="flex items-center">
         <svg className="w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
@@ -72,10 +72,14 @@ const DigitalPage = ({category=''}:{category:string}) => {
     <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-2 item_list lg:pt-20'>
     {digitalProducts.map((product:ProductData) => (
     <Wrapper key={product.id}>
-    <Link to={`/products/${product.id}`} key={product.id} onClick={() => setSelectedProduct(product)}>
+    <Link 
+      to={`/products/${product.id}`} 
+      key={product.id} 
+      onClick={() => setSelectedProduct(product)}>
     <div className="card shadow-xl m-2" key={product.id}>
         <figure className='w-30 h-72 bg-white'>
-        <img className='w-60 max-h-[100%] hover:scale-110 ease-linear duration-200"' src={product.image}/>
+        <img className='w-60 max-h-[100%] hover:scale-110 ease-linear duration-200"' 
+             src={product.image}/>
         </figure>
          <div className="card-body h-52 items-center">
          <h2 className='card-title lg:text-xl md:text-sm'>{product.title}</h2>

@@ -1,52 +1,19 @@
-
-// const Footer = () => {
-
-//   return (
-    
-// <footer className="fixed bottom-0 left-0 z-20 w-full p-4 bg-base-200 border-t border-gray-200 shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800 dark:border-gray-600">
-//     <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="https://flowbite.com/" className="hover:underline">Flowbite™</a>. All Rights Reserved.
-//     </span>
-//     <ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
-//         <li>
-//             <a href="#" className="mr-4 hover:underline md:mr-6">About</a>
-//         </li>
-//         <li>
-//             <a href="#" className="mr-4 hover:underline md:mr-6">Privacy Policy</a>
-//         </li>
-//         <li>
-//             <a href="#" className="mr-4 hover:underline md:mr-6">Licensing</a>
-//         </li>
-//         <li>
-//             <a href="#" className="hover:underline">Contact</a>
-//         </li>
-//     </ul>
-// </footer>
-
-
-
-//   )
-// }
-
-// export default Footer
-
-const  Footer= () => {
+const Footer= () => {
     return (
       <footer className="bottom-0 footer footer-center p-10 bg-base-200 text-base-content">
-        {/* 1. 제로베이스 링크 */}
         <div>
           <p>
             <a
-              href="https://zero-base.co.kr/"
+              href="#"
               className="link link-hover"
               target="_blank"
               rel="noreferrer noopener nofollow"
             >
-              제로베이스
+              React Shopping Shop
             </a>
           </p>
         </div>
   
-        {/* 2. 카드사 */}
         <ul className="flex">
           <li>
             <svg
@@ -266,10 +233,9 @@ const  Footer= () => {
           </li>
         </ul>
   
-        {/* 3. SNS */}
         <div className="grid grid-flow-col gap-4">
           <a
-            href="https://github.com/oinochoe"
+            href="#"
             className="tooltip"
             data-tip="github"
             target="_blank"
@@ -323,7 +289,6 @@ const  Footer= () => {
           </a>
         </div>
   
-        {/* 4. 저작권 */}
         <div>
           <p>Copyright © 2023 - Zero Base</p>
         </div>

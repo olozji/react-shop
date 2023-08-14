@@ -6,22 +6,7 @@ import {themeContext} from '../App';
 import { useRecoilValue } from 'recoil';
 import { cartItemCountState } from '../store/CartAtoms';
 import Search from './Search';
-import { getPost } from '../store/ProductsAtoms';
-
-interface ProductData {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
-  rating: {
-    rate: number;
-    count: number;
-  };
-  quantity:number;
-}
-
+import { getData } from '../store/ProductsAtoms';
 
 const NavBar = () => {
   
@@ -82,9 +67,9 @@ const NavBar = () => {
    <div className='flex-none hidden md:block'>
     <ul className='menu menu-horizontal p-0'>
         <h1 className='self-center text-2xl font-semibold whitespace-nowrap dark:text-white mx-8'><Link to='/'>React Shopping Shop</Link></h1>
-        <div className='block py-2 pl-3 pr-4 font-semibold text-white-900 rounded hover:bg-gray-100 md:hover:bg-transparent dark:border-gray-700 mx-8'><Link to='/fashion'>패션</Link></div>
-        <div className='block py-2 pl-3 pr-4 font-semibold text-white-900 rounded hover:bg-gray-100 md:hover:bg-transparent dark:border-gray-700 mx-8'><Link to='/accessory'>악세사리</Link></div>
-        <div className='block py-2 pl-3 pr-4 font-semibold text-white-900 rounded hover:bg-gray-100 md:hover:bg-transparent dark:border-gray-700 mx-8'><Link to='/digital'>디지털</Link></div>
+        <div className='block py-2 pl-3 pr-4 font-bold text-white-900 rounded hover:bg-gray-100 md:hover:bg-transparent dark:border-gray-700 mx-8 text-lg'><Link to='/fashion'>패션</Link></div>
+        <div className='block py-2 pl-3 pr-4 font-bold text-white-900 rounded hover:bg-gray-100 md:hover:bg-transparent dark:border-gray-700 mx-8 text-lg'><Link to='/accessory'>악세사리</Link></div>
+        <div className='block py-2 pl-3 pr-4 font-bold text-white-900 rounded hover:bg-gray-100 md:hover:bg-transparent dark:border-gray-700 mx-8 text-lg'><Link to='/digital'>디지털</Link></div>
         </ul>
         </div>
         <div className="grow" id="space"></div>

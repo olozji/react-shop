@@ -1,4 +1,3 @@
-import  axios  from "axios";
 import { atom, selector } from "recoil"
 
 
@@ -24,7 +23,7 @@ export const productsState = atom<ProductData[]>({
 
 export const selectedProductState = atom<ProductData | null>({
     key: 'selectedProductState',
-    default: null, // 기본값은 null
+    default: null,
   });
 
   export const getSelectedProduct = selector<ProductData | null>({
@@ -36,8 +35,8 @@ export const selectedProductState = atom<ProductData | null>({
     },
   });
 
-export const getPost = selector({
-    key:'getPost',
+export const getData = selector({
+    key:'getData',
     get: async () => {
         const res = await fetch('https://fakestoreapi.com/products/');
         const data = await res.json();

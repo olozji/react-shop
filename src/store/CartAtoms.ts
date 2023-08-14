@@ -1,4 +1,4 @@
-import { useSetRecoilState,selectorFamily,SetterOrUpdater, atom,selector } from "recoil";
+import { SetterOrUpdater, atom,selector } from "recoil";
 
 
 export interface ProductData {
@@ -30,34 +30,12 @@ export const cartState = atom<ProductData[]>({
 export const cartItemCountState = selector<number | any>({
     key:'cartItemCountState',
     get:({get}) => {
-      let totalCount = 0;
         const cart = get(cartState);
-        //return cart.length;
         const totalQuantity = cart.reduce((total, product:any) => total + product.quantity, 0);
         return totalQuantity;
     }
 })
 
-
-export const cartItemCountDefaultState = atom<number>({
-  key: 'cartItemCountDefaultState',
-  default: 0,
-});
-
-// 장바구니에 상품을 추가, 삭제
-
-// export const addToCart = (product: ProductData) => {
-//   return (set: SetterOrUpdater<ProductData[]>) => {
-//     set((prevCart) => [...prevCart, product]);
-//     console.log(product);
-//   };
-// };
-
-// export const addToCart = (product: ProductData) => {
-//   return (set: SetterOrUpdater<ProductData[] >) => {
-//     set((prevCart) => [...prevCart, { ...product, quantity: 1 }]);
-//   };
-// };
 
 export const addToCart = (product: ProductData, quantityToAdd: number = 1) => {
   return (set: SetterOrUpdater<ProductData[]>) => {
@@ -73,7 +51,6 @@ export const addToCart = (product: ProductData, quantityToAdd: number = 1) => {
     });
   };
 };
-
 
 
 export const removeFromCart = (productId: number) => {

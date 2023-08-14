@@ -1,6 +1,6 @@
 import React, {useEffect ,useState } from 'react'
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { getPost, selectedProductState } from '../store/ProductsAtoms'
+import { getData, selectedProductState } from '../store/ProductsAtoms'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -19,7 +19,7 @@ export interface ProductData {
 
 const AccessoryPage = ({category=''}:{category:string}) => {
 
-    const allProducts = useRecoilValue(getPost);
+    const allProducts = useRecoilValue(getData);
     const accessoryProducts = allProducts.filter((product:ProductData) => product.category === "jewelery");
 
     const [selectedProduct, setSelectedProduct] = useRecoilState(selectedProductState);
@@ -41,8 +41,7 @@ const AccessoryPage = ({category=''}:{category:string}) => {
     <section className='pt-20 lg:pt-5 pb-4 lg:pb-8 px-4 xl:px-2 xl:container mx-auto'>
        <h2 className="mb-5 lg:mb-8 text-3xl lg:text-4xl text-center font-bold">
             {categoryName}
-          </h2>
-
+        </h2>
    <nav className="flex" aria-label="Breadcrumb">
   <ol className="inline-flex items-center space-x-1 md:space-x-3">
     <li className="inline-flex items-center">
@@ -66,10 +65,14 @@ const AccessoryPage = ({category=''}:{category:string}) => {
     <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-2 item_list lg:pt-20'>
     {accessoryProducts.map((product:ProductData) => (
       <Wrapper key={product.id}>
-      <Link to={`/products/${product.id}`} key={product.id} onClick={() => setSelectedProduct(product)}>
+      <Link 
+          to={`/products/${product.id}`} 
+          key={product.id} 
+          onClick={() => setSelectedProduct(product)}>
     <div className="card shadow-xl m-2" key={product.id}>
         <figure className='w-30 h-72 bg-white'>
-        <img className='w-60 max-h-[100%] hover:scale-110 ease-linear duration-200"' src={product.image}/>
+        <img className='w-60 max-h-[100%] hover:scale-110 ease-linear duration-200"' 
+             src={product.image}/>
         </figure>
          <div className="card-body h-52 items-center">
          <h2 className='card-title lg:text-xl md:text-sm'>{product.title}</h2>

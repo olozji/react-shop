@@ -14,46 +14,11 @@ interface CartItemProps extends ProductData {
 
 const CartItem: React.FC<CartItemProps> = (props) => {
 
-  //const [quantity, setQuantity] = useState(props.quantity || 0);
-  //const cartItems = useRecoilValue(cartState);
-  const cartItemCount = useRecoilValue(cartItemCountState);
-  const setCart = useSetRecoilState(cartState);
   const [cartItems, setCartItems] = useRecoilState(cartState);
   const itemIndex = cartItems.findIndex((item) => item.id === props.id);
   const item = cartItems.find((item) => item.id === props.id);
   const quantity = item ? item.quantity || 0 : 0;
 
-
-  // const handleAddToCart = () => {
-  //   setQuantity((prevQuantity) => prevQuantity + 1);
-  //  // cartItemCount((prevCount:any) => prevCount + 1);
-  //   addToCart({ ...props, quantity: quantity + 1 });
-  // };
-
-  // const handleRemoveFromCart = () => {
-  //   if (quantity > 0) {
-  //     setQuantity((prevQuantity) => prevQuantity - 1);
-  //   //  setCartItemCount((prevCount:any) => prevCount - 1);
-  //     removeFromCart(props.id);
-  //   }
-  // };
-
-
-
- 
-  // const handleAddToCart = () => {
-  //   addToCart({ ...props, quantity: quantity + 1 });
-  // };
-
-  // const handleRemoveFromCart = () => {
-  //   if (quantity > 0) {
-  //     removeFromCart(props.id);
-  //   }
-  // };
-
-  const handleAddToCart = () => {
-    setCartItems(cartItems);
-  };
 
   const handleRemoveFromCart = () => {
     setCartItems(cartItems);

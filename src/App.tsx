@@ -4,7 +4,7 @@ import Page from './routers/Page';
 import Footer from './componenets/Footer';
 import {createContext,useEffect, useState} from 'react';
 import { useRecoilValue } from 'recoil';
-import { getPost } from './store/ProductsAtoms';
+import { getData } from './store/ProductsAtoms';
 
 
 

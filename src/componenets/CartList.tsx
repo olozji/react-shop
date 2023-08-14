@@ -24,7 +24,6 @@ const CartList = (props:any & ProductData) => {
 
   const cartItems = useRecoilValue(cartState);
   const [cartItemss, setCartItems] = useRecoilState(cartState);
-  const cartItemCount = useRecoilValue(cartItemCountState);
   const quantities = useRecoilValue(cartItemQuantityState);
   console.log(cartItems);
  
@@ -77,7 +76,8 @@ const CartList = (props:any & ProductData) => {
           rating={{
             rate: 0,
             count: 0
-          }}                      />
+          }}                      
+          />
       ))}
     </div>
     <div className="self-start shrink-0 flex items-center mt-10 mb-20">
