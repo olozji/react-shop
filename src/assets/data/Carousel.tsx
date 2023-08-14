@@ -1,4 +1,4 @@
-export const slideData = [
+export const slideData:any = [
     {
         id:1,
         title:'최신 트렌드의 다양한 종류의 옷',

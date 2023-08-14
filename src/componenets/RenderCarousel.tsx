@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import { slideData } from '../assets/data/Carousel'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel'
-import { Link } from 'react-router-dom';
+import { Link, To } from 'react-router-dom';
 
 
-const carouselSlide = slideData.map(image => (
+const carouselSlide = slideData.map((image: 
+  { src: string | undefined; title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; content: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; path: To; }) => (
   <div className="h-80 md:h-full">
       <img src={image.src} className="h-full" />
       <div className="absolute transform -translate-y-1/2 md:left-20 top-1/2">
@@ -22,7 +23,7 @@ const carouselSlide = slideData.map(image => (
 
 const renderCarousel = () => {
 
-   const [currentIndex, setCurrentIndex ] = useState("");
+   const [currentIndex, setCurrentIndex ] = useState(0);
    
    const handleChange = (index:any) => {
       setCurrentIndex(index);
@@ -34,7 +35,7 @@ const renderCarousel = () => {
         autoPlay={true}
         infiniteLoop={true}
         showThumbs={false}
-        selectedItem={slideData[currentIndex]}
+        selectedItem={currentIndex}
         onChange={handleChange}
         >
         {carouselSlide}  
