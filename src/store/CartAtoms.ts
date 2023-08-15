@@ -36,7 +36,7 @@ export const cartItemCountState = selector<number | any>({
     }
 })
 
-
+// 장바구니에 담기
 export const addToCart = (product: ProductData, quantityToAdd: number = 1) => {
   return (set: SetterOrUpdater<ProductData[]>) => {
     set((prevCart:any) => {
@@ -52,13 +52,14 @@ export const addToCart = (product: ProductData, quantityToAdd: number = 1) => {
   };
 };
 
-
+// 장바구니에서 제거하기
 export const removeFromCart = (productId: number) => {
   return (set: SetterOrUpdater<ProductData[]>) => {
     set((prevCart) => prevCart.filter((product) => product.id !== productId));
   };
 };
 
+// 장바구니 수량 상태
 export const cartItemQuantityState = atom<CartItemQuantityState>({
   key: 'cartItemQuantityState',
   default: {},
