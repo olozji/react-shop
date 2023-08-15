@@ -8,10 +8,10 @@ import { Link, To } from 'react-router-dom';
 const carouselSlide = slideData.map((image:any) =>
   <div className="h-80 md:h-full">
       <img src={image.src} className="h-full" />
-      <div className="absolute transform -translate-y-1/2 md:left-20 top-1/2">
+      <div className="absolute transform -translate-y-1/2 md:left-20 top-1/2 mx-8">
         <div className="text-white text-left">
           <h1 className="text-3xl md:text-5xl font-bold">{image.title}</h1>
-          <p className="py-4">{image.content}</p>
+          <p className="py-4 md:text-2xl">{image.content}</p>
           <button className="btn">
             <Link to={image.path}>바로가기 &#8594;</Link>
           </button>

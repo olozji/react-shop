@@ -137,11 +137,11 @@ const Products : React.FC<ProductData> = (props) => {
   </ol>
 </nav>
   <div className="lg:flex lg:items-center mt-6 md:mt-14 px-2 lg:px-0">
-    <figure className="flex-shrink-0 rounded-2xl overflow-hidden px-4 py-4 bg-white view_image w-96">
+    <figure className="flex-shrink-0 rounded-2xl overflow-hidden px-4 py-4 bg-white view_image">
       <img
         src={selectedProduct?.image}
         alt={selectedProduct?.title}
-        className="object-contain w-full h-80"
+        className="object-contain w-full h-80 md:w-50"
       />
     </figure>
     <div className="card-body px-1 lg:px-12">
