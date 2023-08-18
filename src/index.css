@@ -36,3 +36,9 @@
   --contrast:#f2f2f2;
 }
 
+@media screen and (max-width:478px) {
+  .menu {
+    top:5%;
+    left:0;
+  }
+}
