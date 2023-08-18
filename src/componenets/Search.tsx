@@ -105,7 +105,7 @@ const Search = (props: SearchProps) => {
       />
 
     {isSearch && (
-     <ul className='menu dropdown-content p-2 shadow bg-base-100 mt-4 !fixed sm:!absolute sm!invisible sm:top-14 w-50 max-h-96 text-base-content overflow-y-auto'>
+     <ul className='menu dropdown-content p-2 shadow bg-base-100 mt-4 !fixed sm:!absolute sm:top-10 w-50 max-h-96 text-base-content overflow-y-auto'>
       {fetchedProductData.map((product:ProductData) => (
           <li key={product.id}>
             <Link 
