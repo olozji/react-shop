@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { getData, productsState, selectedProductState } from '../store/ProductsAtoms'
+import { filterState, filteredProductsState, getData, productsState, selectedProductState } from '../store/ProductsAtoms'
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -25,9 +25,9 @@ const FashionPage = ({category=''}: {category:string}) => {
 
     const products = useRecoilValue(productsState);
     const [selectedProduct, setSelectedProduct] = useRecoilState(selectedProductState);
-
-
+  
     const [categoryName, setCategoryName] = useState('');
+    const [selectPriceRange, setSelectedPriceRange] = useState('전체');
 
     useEffect(() => {
       if (category === "men's clothing" && "women's clothing") {
@@ -38,6 +38,29 @@ const FashionPage = ({category=''}: {category:string}) => {
         setCategoryName('액세서리');
       } 
     },[categoryName])
+
+  const [filter, setFilter] = useRecoilState(filterState);
+
+  const filteredProducts = fashionProducts.filter((product: ProductData) => {
+    if (filter === '전체') {
+      return true; // 전체 가격 범위 선택 시 모든 상품 반환
+    }
+
+    // product.price를 문자열로 변환
+    const priceString = String(product.price);
+    const productPrice = parseFloat(priceString.replace('$', '').replace(',', ''));
+
+    if (filter === '0-50') {
+      return productPrice >= 0 && productPrice <= 50;
+    } else if (filter === '50-100') {
+      return productPrice > 50 && productPrice <= 100;
+    } else if (filter === '100-1000') {
+      return productPrice > 100 && productPrice <= 1000;
+    }
+
+    return false; // 범위에 해당하지 않는 상품 제외
+  });
+
 
 
   return (
@@ -68,28 +91,22 @@ const FashionPage = ({category=''}: {category:string}) => {
 </nav>
 <div className='md-pt-10 relative'>
     <div className='absolute right-10 sm-pt-0'>
-    {/* <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-  <option selected>가격대별</option>
-  <option value="US">0~50</option>
-  <option value="CA">60~100</option>
-  <option value="FR">100~300</option>
-</select>
-<select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-  <option selected>색상별</option>
-  <option value="US">United States</option>
-  <option value="CA">Canada</option>
-  <option value="FR">France</option>
-  <option value="DE">Germany</option>
-</select> */}
 <div className="flex items-center justify-center py-4 md:py-8 flex-wrap">
-    <button type="button" className="text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:bg-gray-900 dark:focus:ring-blue-800">All categories</button>
+    <select 
+    value={filter}
+    onChange={(e) => setFilter(e.target.value)}
+    className="text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:bg-gray-900 dark:focus:ring-blue-800">
+      <option value="전체">가격대별</option>
+      <option value="0-50">0~50</option>
+      <option value="50-100">50~100</option>
+      <option value="100-1000">100~1000</option>
+    </select>
     <button type="button" className="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:text-white dark:focus:ring-gray-800">Shoes</button>
 </div>
   </div>
     </div>
     <div className='grid gap-4 pt-20 md:grid-cols-2 md:pt-20 sm:pt-20 lg:grid-cols-2 item_list lg:pt-20'>
-    {fashionProducts.map((product:ProductData) => (
-  
+    {filteredProducts.map((product:ProductData) => (
     <Link 
       to={`/products/${product.id}`} 
       key={product.id} 
@@ -105,7 +122,6 @@ const FashionPage = ({category=''}: {category:string}) => {
       </div>
     </div>
     </Link>
-
      ))}
     </div>
     </section>
