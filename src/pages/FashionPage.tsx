@@ -3,6 +3,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { filterState, filteredProductsState, getData, productsState, selectedProductState } from '../store/ProductsAtoms'
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { Wrraper } from './Cart';
 
 
 export interface ProductData {
@@ -50,12 +51,12 @@ const FashionPage = ({category=''}: {category:string}) => {
     const priceString = String(product.price);
     const productPrice = parseFloat(priceString.replace('$', '').replace(',', ''));
 
-    if (filter === '0-50') {
-      return productPrice >= 0 && productPrice <= 50;
-    } else if (filter === '50-100') {
-      return productPrice > 50 && productPrice <= 100;
-    } else if (filter === '100-1000') {
-      return productPrice > 100 && productPrice <= 1000;
+    if (filter === '0-100') {
+      return productPrice >= 0 && productPrice <= 100;
+    } else if (filter === '100-500') {
+      return productPrice > 100 && productPrice <= 500;
+    } else if (filter === '500-1000') {
+      return productPrice > 500 && productPrice <= 1000;
     }
 
     return false; // 범위에 해당하지 않는 상품 제외
@@ -64,6 +65,7 @@ const FashionPage = ({category=''}: {category:string}) => {
 
 
   return (
+    <Wrraper>
     <section className="main">
     <section className='pt-20 lg:pt-5 pb-4 lg:pb-8 px-4 xl:px-2 xl:container mx-auto'>
      <h2 className="mb-5 lg:mb-8 text-3xl lg:text-4xl text-center font-bold">
@@ -89,47 +91,55 @@ const FashionPage = ({category=''}: {category:string}) => {
     </li>
   </ol>
 </nav>
-<div className='md-pt-10 relative'>
+    <div className='md-pt-10 relative'>
     <div className='absolute right-10 sm-pt-0'>
-<div className="flex items-center justify-center py-4 md:py-8 flex-wrap">
-    <select 
-    value={filter}
-    onChange={(e) => setFilter(e.target.value)}
-    className="text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:bg-gray-900 dark:focus:ring-blue-800">
-      <option value="전체">가격대별</option>
-      <option value="0-50">0~50</option>
-      <option value="50-100">50~100</option>
-      <option value="100-1000">100~1000</option>
+    <div className="flex items-center justify-center py-4 md:py-8 flex-wrap">
+      <select id="filter" value={filter} onChange={(e) => setFilter(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+      <option value="전체">전체</option>
+      <option value="0-100">0-100</option>
+      <option value="100-500">100-500</option>
+      <option value="500-1000">500-1000</option>
     </select>
-    <button type="button" className="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:text-white dark:focus:ring-gray-800">Shoes</button>
-</div>
-  </div>
     </div>
-    <div className='grid gap-4 pt-20 md:grid-cols-2 md:pt-20 sm:pt-20 lg:grid-cols-2 item_list lg:pt-20'>
-    {filteredProducts.map((product:ProductData) => (
-    <Link 
-      to={`/products/${product.id}`} 
-      key={product.id} 
-      onClick={() => setSelectedProduct(product)}>
-    <div className="card shadow-xl m-2">
-        <figure className='w-30 h-72 bg-white'>
-        <img className='w-60 max-h-[100%] hover:scale-110 ease-linear duration-200"'
-             src={product.image}/>
-        </figure>
-         <div className="card-body h-52 items-center">
-         <h2 className='card-title lg:text-xl md:text-sm'>{product.title}</h2>
-        <h2 className='text-base font-bold lg:text-3xl md:text-sm'>${product.price}</h2> 
       </div>
-    </div>
-    </Link>
-     ))}
+        </div>
+    <div className='grid gap-4 pt-20 md:grid-cols-2 md:pt-20 sm:pt-20 lg:grid-cols-2 item_list lg:pt-20'>
+    {filteredProducts.length === 0 ? (
+      <div className="pt-4 lg:pt-5 pb-4 lg:pb-8 px-4 xl:px-2 xl:container mx-auto">
+      <section className='pt-16'>
+         <div className="pt-4 lg:pt-5 pb-4 lg:pb-8 px-4 xl:px-2 xl:container mx-auto">
+           <h1 className='text-4xl'>상품이 존재하지 않습니다</h1>
+         </div>
+       </section>
+     </div>
+        ) : (
+          filteredProducts.map((product: ProductData) => (
+            <Link
+              to={`/products/${product.id}`}
+              key={product.id}
+              onClick={() => setSelectedProduct(product)}>
+              <div className="card shadow-xl m-2">
+                <figure className='w-30 h-72 bg-white'>
+                  <img className='w-60 max-h-[100%] hover:scale-110 ease-linear duration-200"'
+                       src={product.image}/>
+                </figure>
+                <div className="card-body h-52 items-center">
+                  <h2 className='card-title lg:text-xl md:text-sm'>{product.title}</h2>
+                  <h2 className='text-base font-bold lg:text-3xl md:text-sm'>${product.price}</h2>
+                </div>
+              </div>
+            </Link>
+          ))
+        )}
     </div>
     </section>
     </section>
+    </Wrraper>
   )
 }
 
 const Wrapper = styled.div`
+
   .card figure img {
     /* max-height: 50%; */
     max-width: 40%;

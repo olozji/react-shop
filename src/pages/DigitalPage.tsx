@@ -1,8 +1,9 @@
 import React ,{useEffect , useState}from 'react'
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { getData ,selectedProductState} from '../store/ProductsAtoms'
+import { filterState, getData ,selectedProductState} from '../store/ProductsAtoms'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { Wrraper } from './Cart';
 
 export interface ProductData {
     id:number;
@@ -38,12 +39,33 @@ const DigitalPage = ({category=''}:{category:string}) => {
       } 
     },[categoryName])
 
-    // const categorys = useRecoilValue(categoryState);
-    // const categoryName = useRecoilValue(categoryNameSelector)
+
+    const [filter, setFilter] = useRecoilState(filterState);
+
+    const filteredProducts = digitalProducts.filter((product: ProductData) => {
+      if (filter === '전체') {
+        return true; // 전체 가격 범위 선택 시 모든 상품 반환
+      }
+  
+      // product.price를 문자열로 변환
+      const priceString = String(product.price);
+      const productPrice = parseFloat(priceString.replace('$', '').replace(',', ''));
+  
+      if (filter === '0-100') {
+        return productPrice >= 0 && productPrice <= 100;
+      } else if (filter === '50-100') {
+        return productPrice > 50 && productPrice <= 100;
+      } else if (filter === '100-1000') {
+        return productPrice > 100 && productPrice <= 1000;
+      }
+  
+      return false; // 범위에 해당하지 않는 상품 제외
+    });
 
 
 
   return (
+   <Wrraper>
     <section className="main">
     <section className='pt-20 lg:pt-5 pb-4 lg:pb-8 px-4 xl:px-2 xl:container mx-auto'>
      <h2 className="mb-5 lg:mb-8 text-3xl lg:text-4xl text-center font-bold">
@@ -69,30 +91,50 @@ const DigitalPage = ({category=''}:{category:string}) => {
     </li>
   </ol>
 </nav>
+<div className='md-pt-10 relative'>
+<div className='absolute right-10 sm-pt-0'>
+<div className="flex items-center justify-center py-4 md:py-8 flex-wrap">
+  <select id="filter" value={filter} onChange={(e) => setFilter(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+  <option value="전체">전체</option>
+  <option value="0-50">0-50</option>
+  <option value="50-100">50-100</option>
+  <option value="100-1000">100-1000</option>
+</select>
+</div>
+  </div>
+    </div>
     <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-2 item_list lg:pt-20'>
-    {digitalProducts.map((product:ProductData) => (
-    <Wrapper key={product.id}>
-    <Link 
-      to={`/products/${product.id}`} 
-      key={product.id} 
-      onClick={() => setSelectedProduct(product)}>
-    <div className="card shadow-xl m-2" key={product.id}>
-        <figure className='w-30 h-72 bg-white'>
-        <img className='w-60 max-h-[100%] hover:scale-110 ease-linear duration-200"' 
-             src={product.image}/>
-        </figure>
-         <div className="card-body h-52 items-center">
-         <h2 className='card-title lg:text-xl md:text-sm'>{product.title}</h2>
-        <h2 className='text-base font-bold lg:text-3xl md:text-sm'>${product.price}</h2> 
-      </div>
-    </div>
-    </Link>
-    </Wrapper>
-     ))}
-     
+    {filteredProducts.length === 0 ? (
+      <div className="pt-4 lg:pt-5 pb-4 lg:pb-8 px-4 xl:px-2 xl:container mx-auto">
+      <section className='pt-16'>
+         <div className="pt-4 lg:pt-5 pb-4 lg:pb-8 px-4 xl:px-2 xl:container mx-auto">
+           <h1 className='text-4xl'>상품이 존재하지 않습니다</h1>
+         </div>
+       </section>
+     </div>
+        ) : (
+          filteredProducts.map((product: ProductData) => (
+            <Link
+              to={`/products/${product.id}`}
+              key={product.id}
+              onClick={() => setSelectedProduct(product)}>
+              <div className="card shadow-xl m-2">
+                <figure className='w-30 h-72 bg-white'>
+                  <img className='w-60 max-h-[100%] hover:scale-110 ease-linear duration-200"'
+                       src={product.image}/>
+                </figure>
+                <div className="card-body h-52 items-center">
+                  <h2 className='card-title lg:text-xl md:text-sm'>{product.title}</h2>
+                  <h2 className='text-base font-bold lg:text-3xl md:text-sm'>${product.price}</h2>
+                </div>
+              </div>
+            </Link>
+          ))
+        )}
     </div>
     </section>
     </section>
+    </Wrraper>
   )
 }
 
